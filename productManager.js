@@ -1,9 +1,17 @@
+import fs from 'fs'
+
 class ProductManager {
 
     #products;
+    #path;
 
-    constructor(){
+    constructor(path){
         this.#products = [];
+        this.#path = path;
+    }
+
+    getPath(){
+        return this.#path;
     }
 
     #generateID(){
@@ -11,6 +19,11 @@ class ProductManager {
 
         return this.#products[this.#products.length-1].id + 1;
     }
+
+    #fileExists = () => {
+        return fs.existsSync(this.#path);
+    }
+
 
     getProducts(){
         return this.#products;
@@ -26,25 +39,31 @@ class ProductManager {
         return 'Error - Not Found';
     }
 
-    addProduct(product){
-        let isCode = this.#products.find(elem => elem.code === product.code);
-        let isNull = !product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock;
+    async addProduct(product){
         
+        let isNull = !product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock;
         if(isNull) return 'Error - Data error';
+        
+        if(!this.#fileExists()) return 'Error - File error';
+        let data = await fs.promises.readFile(this.#path, 'utf-8');
+        this.#products = JSON.parse(data);
 
+        let isCode = this.#products.find(elem => elem.code === product.code);
         if(isCode) return 'Error - Code is repeat';
 
         const newProduct = {id: this.#generateID(), ...product};
         this.#products.push(newProduct);
+
+        await fs.promises.writeFile(this.#path, JSON.stringify(this.#products, null, '\t'));
         
         return newProduct;
     }
 
 }
 
-/* 
+ 
 // Pruebas Realizadas
-const pm = new ProductManager();
+const pm = new ProductManager('./products.json');
 console.log(pm.getProducts());
 const prod = { title: "producto prueba",
                description: "Este es un producto prueba",
@@ -62,7 +81,7 @@ const prod1 = { title: "producto prueba",
               }
 console.log(pm.addProduct(prod));
 console.log(pm.addProduct(prod1));
-console.log(pm.getProducts());
+/*console.log(pm.getProducts());
 console.log(pm.addProduct(prod));
 console.log(pm.getProductById(3));
 */
