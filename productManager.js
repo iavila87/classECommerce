@@ -6,8 +6,8 @@ class ProductManager {
     #path;
 
     constructor(path){
-        this.#products = [];
         this.#path = path;
+        this.#fileInit();
     }
 
     getPath(){
@@ -20,16 +20,29 @@ class ProductManager {
         return this.#products[this.#products.length-1].id + 1;
     }
 
+    async #fileInit(){
+        if(!this.#fileExists()){
+            await fs.promises.writeFile(this.#path, JSON.stringify([], null, '\t'));
+        }
+    }
+
     #fileExists = () => {
         return fs.existsSync(this.#path);
     }
 
 
-    getProducts(){
+    async getProducts(){
+        if(!this.#fileExists()) return 'Error - File error';
+        let data = await fs.promises.readFile(this.#path, 'utf-8');
+        this.#products = JSON.parse(data);
         return this.#products;
     }
 
-    getProductById(id){
+    async getProductById(id){
+        if(!this.#fileExists()) return 'Error - File error';
+        let data = await fs.promises.readFile(this.#path, 'utf-8');
+        this.#products = JSON.parse(data);
+
         for (let i = 0; i < this.#products.length; i++) {
             if(this.#products[i].id === id) {
                 return this.#products[i];
@@ -59,30 +72,81 @@ class ProductManager {
         return newProduct;
     }
 
+    async updateProduct(id, pUpdate){
+        if(!this.#fileExists()) return 'Error - File error';
+        let data = await fs.promises.readFile(this.#path, 'utf-8');
+        this.#products = JSON.parse(data);
+        
+        for(let i = 0; i < this.#products.length; i++){
+            if(this.#products[i].id === id){
+                this.#products[i] = {...this.#products[i], ...pUpdate};
+                await fs.promises.writeFile(this.#path, JSON.stringify(this.#products, null, '\t')); 
+                return this.#products[i];
+            }
+        }
+
+        return 'Error - Product does not exists';
+    }
+
+    async deleteProduct(id){
+        if(!this.#fileExists()) return 'Error - File error';
+        let data = await fs.promises.readFile(this.#path, 'utf-8');
+        this.#products = JSON.parse(data);
+
+        let newProducts = this.#products.filter(elem => elem.id !== id);
+        
+        if(newProducts.length < this.#products.length){
+            await fs.promises.writeFile(this.#path, JSON.stringify(newProducts, null, '\t'));
+            return newProducts;
+        }
+
+        return 'Error - Product does not exists';
+    }
+
+
 }
 
  
+
+
 // Pruebas Realizadas
-const pm = new ProductManager('./products.json');
-console.log(pm.getProducts());
-const prod = { title: "producto prueba",
-               description: "Este es un producto prueba",
-               price: 200,
-               thumbnail: "Sin imagen",
-               code: "abc123",
-               stock: 25
-             }
-const prod1 = { title: "producto prueba",
+const pruebas = async ()=>{
+    const pm = new ProductManager('./products.json');
+    console.log("Comenzando Test");
+    console.log("getProducts:");
+    console.log(await pm.getProducts());
+    const prod = { title: "producto prueba",
                 description: "Este es un producto prueba",
                 price: 200,
                 thumbnail: "Sin imagen",
-                code: "abc124",
+                code: "abc123",
                 stock: 25
-              }
-console.log(pm.addProduct(prod));
-console.log(pm.addProduct(prod1));
-/*console.log(pm.getProducts());
-console.log(pm.addProduct(prod));
-console.log(pm.getProductById(3));
-*/
+                };
+    const prod1 = { title: "producto prueba",
+                    description: "Este es un producto prueba",
+                    price: 200,
+                    thumbnail: "Sin imagen",
+                    code: "abc124",
+                    stock: 25
+                };
+    console.log("addProduct:1");
+    console.log(await pm.addProduct(prod));
+    console.log("addProduct:2");
+    console.log(await pm.addProduct(prod1));
+    console.log("getProducts:");
+    console.log(await pm.getProducts());
+    console.log("getProductById(1):");
+    console.log(await pm.getProductById(1));
+    console.log("getProductById(2):");
+    console.log(await pm.getProductById(2));
+    console.log("updateProduct(1):");
+    console.log(await pm.updateProduct(2,{price:250}));
+    console.log("getProductById(1):");
+    console.log(await pm.getProductById(1));
+    console.log("deleteProduct(1):");
+    console.log(await pm.deleteProduct(1));
+    console.log("deleteProduct(1):");
+    console.log(await pm.deleteProduct(1));
+}
 
+//pruebas();
