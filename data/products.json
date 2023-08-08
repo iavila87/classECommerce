@@ -1,20 +1,92 @@
 [
     {
 		"id": 1,
-		"title": "producto prueba",
-		"description": "Este es un producto prueba",
-		"price": 250,
+		"title": "Producto 1",
+		"description": "Descripcion del producto 1",
+		"price": 790,
 		"thumbnail": "Sin imagen",
-		"code": "abc125",
-		"stock": 25
+		"code": "P001",
+		"stock": 29
 	},
     {
 		"id": 2,
-		"title": "producto prueba",
-		"description": "Este es un producto prueba",
-		"price": 250,
+		"title": "Producto 2",
+		"description": "Descripcion del producto 2",
+		"price": 850,
 		"thumbnail": "Sin imagen",
-		"code": "abc124",
-		"stock": 25
+		"code": "P002",
+		"stock": 253
+	},
+    {
+		"id": 3,
+		"title": "Producto 3",
+		"description": "Descripcion del producto 3",
+		"price": 1150,
+		"thumbnail": "Sin imagen",
+		"code": "P003",
+		"stock": 205
+	},
+    {
+		"id": 4,
+		"title": "Producto 4",
+		"description": "Descripcion del producto 4",
+		"price": 950,
+		"thumbnail": "Sin imagen",
+		"code": "P004",
+		"stock": 140
+	},
+    {
+		"id": 5,
+		"title": "Producto 5",
+		"description": "Descripcion del producto 5",
+		"price": 1420,
+		"thumbnail": "Sin imagen",
+		"code": "P005",
+		"stock": 65
+	},
+    {
+		"id": 6,
+		"title": "Producto 6",
+		"description": "Descripcion del producto 6",
+		"price": 3200,
+		"thumbnail": "Sin imagen",
+		"code": "P006",
+		"stock": 99
+	},
+    {
+		"id": 7,
+		"title": "Producto 7",
+		"description": "Descripcion del producto 7",
+		"price": 6000,
+		"thumbnail": "Sin imagen",
+		"code": "P007",
+		"stock": 74
+	},
+    {
+		"id": 8,
+		"title": "Producto 8",
+		"description": "Descripcion del producto 8",
+		"price": 2950,
+		"thumbnail": "Sin imagen",
+		"code": "P008",
+		"stock": 78
+	},
+    {
+		"id": 9,
+		"title": "Producto 9",
+		"description": "Descripcion del producto 9",
+		"price": 650,
+		"thumbnail": "Sin imagen",
+		"code": "P009",
+		"stock": 150
+	},
+    {
+		"id": 10,
+		"title": "Producto 10",
+		"description": "Descripcion del producto 10",
+		"price": 1500,
+		"thumbnail": "Sin imagen",
+		"code": "P010",
+		"stock": 51
 	}
 ]

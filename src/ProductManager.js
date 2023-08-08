@@ -151,4 +151,4 @@ const pruebas = async ()=>{
 
 export default ProductManager
 
-pruebas();
+//pruebas();
