@@ -1,9 +1,9 @@
 import express from 'express'
-import { ProductManager } from './ProductManager'
+import  ProductManager  from './ProductManager.js'
 
 /** Inicializacion de express */
 const app = express();
-
+const pm = new ProductManager('./data/products.json');
 
 
 

@@ -149,4 +149,6 @@ const pruebas = async ()=>{
     console.log(await pm.deleteProduct(1));
 }
 
-//pruebas();
+export default ProductManager
+
+pruebas();
