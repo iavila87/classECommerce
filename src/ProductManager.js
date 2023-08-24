@@ -1,4 +1,19 @@
 import fs from 'fs'
+
+/**
+ * Product : 
+ * {
+		"id": 1,
+		"title": "Producto 1",
+		"description": "Descripcion del producto 1",
+		"code": "P001",
+		"price": 790,
+		"status": true,
+		"stock": 29,
+		"category": "categoria A",
+		"thumbnails": ["Sin imagen 1", "Sin imagen 2"]
+	}
+ */
  
 class ProductManager {
 
@@ -54,7 +69,9 @@ class ProductManager {
 
     async addProduct(product){
         
-        let isNull = !product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock;
+        let isNull = !product.title || !product.description || 
+                     !product.price || !product.code || 
+                     !product.stock || !product.category;
         if(isNull) return 'Error - Data error';
         
         if(!this.#fileExists()) return 'Error - File error';
@@ -64,7 +81,7 @@ class ProductManager {
         let isCode = this.#products.find(elem => elem.code === product.code);
         if(isCode) return 'Error - Code is repeat';
 
-        const newProduct = {id: this.#generateID(), ...product};
+        const newProduct = {...product, id: this.#generateID()};
         this.#products.push(newProduct);
 
         await fs.promises.writeFile(this.#path, JSON.stringify(this.#products, null, '\t'));
@@ -79,6 +96,7 @@ class ProductManager {
         
         for(let i = 0; i < this.#products.length; i++){
             if(this.#products[i].id === id){
+                delete pUpdate.id;
                 this.#products[i] = {...this.#products[i], ...pUpdate};
                 await fs.promises.writeFile(this.#path, JSON.stringify(this.#products, null, '\t')); 
                 return this.#products[i];
