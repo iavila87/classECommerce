@@ -1,31 +1,34 @@
-<div>Home {{ user }}</div>
+<div>
+    <h1>Productos</h1>
 
-{{#if emptyProducts}}
-    <p>No hay productos en el inventario</p>
-{{else}}
-    <p>Si hay productos</p>
-    <table>
-        <tr>
-            <td>ID</td>
-            <td>Codigo</td>
-            <td>Nombre</td>
-            <td>Descripcion</td>
-            <td>Precio</td>
-            <td>Cantidad</td>
-            <td>Categoria</td>
-            <td>url Imagenes</td>
-        </tr>
-        {{#each products}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.code}}</td>
-            <td>{{this.title}}</td>
-            <td>{{this.description}}</td>
-            <td>{{this.price}}</td>
-            <td>{{this.stock}}</td>
-            <td>{{this.category}}</td>
-            <td>{{this.thumbnails.[0]}}</td>
-        </tr>
-        {{/each}}
-    </table>
-{{/if}}
+    {{#if emptyProducts}}
+        <p>No hay productos en el inventario</p>
+    {{else}}
+        <p>Si hay productos</p>
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>Codigo</td>
+                <td>Nombre</td>
+                <td>Descripcion</td>
+                <td>Precio</td>
+                <td>Cantidad</td>
+                <td>Categoria</td>
+                <td>url Imagenes</td>
+            </tr>
+            {{#each products}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.stock}}</td>
+                <td>{{this.category}}</td>
+                <td>{{this.thumbnails.[0]}}</td>
+            </tr>
+            {{/each}}
+        </table>
+    {{/if}}
+
+</div>

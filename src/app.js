@@ -9,7 +9,7 @@ const app = express();
 /** Inicializacion de handlebars*/
 app.engine('handlebars', handlebars.engine());  // instancia handlebars
 app.set('views', './src/views');                // indica donde se encontraran las vistas 
-app.set('view engine', 'handlebars');          // confirma que el motor de plantillas es handlebars
+app.set('view engine', 'handlebars');           // confirma que el motor de plantillas es handlebars
 /** */
 app.use(express.json());
 
