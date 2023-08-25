@@ -15,24 +15,22 @@ router.get('/', async (req, res) => {
     }
 
     res.render('home', { // como segundo argumento le paso argumentos como objetos
-        user: 'ivan avila',
         emptyProducts,
         products: products
     });     // renderiza el home.handlebars en main.handlebars
 });
 
 router.get('/realtimeproducts', async (req, res) => {
-    // consulta productos
-    const products = await pm.getProducts();
-    let emptyProducts = false;
+    
+    /*let emptyProducts = false;
     if(typeof products == 'string' || products.length == 0) {
         emptyProducts = true;
-    }
+    }*/
 
     res.render('realTimeProducts', { // como segundo argumento le paso argumentos como objetos
-        user: 'ivan avila',
+        /*user: 'ivan avila',
         emptyProducts,
-        products: products
+        products: products*/
     });     // renderiza el home.handlebars en main.handlebars
 });
 

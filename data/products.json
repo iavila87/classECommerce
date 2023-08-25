@@ -170,5 +170,14 @@
 		"stock": 74,
 		"category": "categoria C",
 		"id": 14
+	},
+	{
+		"title": "producto 22",
+		"description": "descr",
+		"code": "p022",
+		"price": 203,
+		"stock": 23,
+		"category": "categoria3",
+		"id": 15
 	}
 ]

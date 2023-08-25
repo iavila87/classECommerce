@@ -1,1 +1,48 @@
-<div>RealTimeProducts</div>
+<div class="container">
+    
+    <div class="row">
+        <div class="col-6">
+            <h1>Productos por WebSocket</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-9">
+            {{#if emptyProducts}}
+                <p>No hay productos en el inventario</p>
+            {{else}}
+                <table class="table table-striped" id="tablaProductos"></table>
+            {{/if}}
+        </div>
+        <div class="col-3">
+            <div>
+                <form id="formCreateProduct" action="" method="post">
+                    <p>Codigo:</p>
+                    <input type="text" name="txtCodigo" id="txtCodigo">
+                    <p>Titulo:</p>
+                    <input type="text" name="txtTitulo" id="txtTitulo">
+                    <p>Descripcion:</p>
+                    <input type="text" name="txtDescripcion" id="txtDescripcion">
+                    <p>Precio:</p>
+                    <input type="text" name="txtPrecio" id="txtPrecio">
+                    <p>Stock:</p>
+                    <input type="text" name="txtStock" id="txtStock">
+                    <p>Categoria:</p>
+                    <input type="text" name="txtCategoria" id="txtCategoria">
+                    <input type="submit" value="Crear Producto">
+                </form>
+            </div>
+            <div>
+                <form id="formDeleteProduct" action="" method="post">
+                    <p>ID Producto:</p>
+                    <input type="text" name="txtIdProducto" id="txtIdProducto">
+                    <input type="submit" value="Eliminar Producto">
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src='/js/realTimeProducts.js'></script>
