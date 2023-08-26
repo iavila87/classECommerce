@@ -1,9 +1,12 @@
 const clientSocket = io();
 
+let formCreateProduct = document.getElementById('formCreateProduct');
+let formDeleteProduct = document.getElementById('formDeleteProduct');
+
 clientSocket.on('message', (data)=>{
     console.log(data);
     let tablaProductos = document.getElementById('tablaProductos');
-    let tablaHtml =`<tr>
+    let tablaHtml =`<tr class="fw-bold">
                         <td>ID</td>
                         <td>Codigo</td>
                         <td>Nombre</td>
@@ -30,7 +33,6 @@ clientSocket.on('message', (data)=>{
     tablaProductos.innerHTML = tablaHtml;
 });
 
-let formCreateProduct = document.getElementById('formCreateProduct');
 formCreateProduct.addEventListener('submit', (e) => {
     e.preventDefault();
     const newProduct = {
@@ -46,10 +48,8 @@ formCreateProduct.addEventListener('submit', (e) => {
 });
 
 
-let formDeleteProduct = document.getElementById('formDeleteProduct');
 formDeleteProduct.addEventListener('submit', (e) => {
     e.preventDefault();
-    const idProduct = parseInt(document.getElementById("txtIdProducto").value);
-    
+    const idProduct = parseInt(document.getElementById("txtIdProducto").value); 
     clientSocket.emit("deleteProduct", idProduct);
 });

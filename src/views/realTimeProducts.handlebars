@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     
     <div class="row">
         <div class="col-6">
@@ -16,27 +16,27 @@
         </div>
         <div class="col-3">
             <div>
-                <form id="formCreateProduct" action="" method="post">
-                    <p>Codigo:</p>
+                <form class="d-flex flex-column mb-3 p-2 border rounded" id="formCreateProduct" action="" method="post">
+                    <p class="mb-1">Codigo:</p>
                     <input type="text" name="txtCodigo" id="txtCodigo">
-                    <p>Titulo:</p>
+                    <p class="mb-1">Titulo:</p>
                     <input type="text" name="txtTitulo" id="txtTitulo">
-                    <p>Descripcion:</p>
+                    <p class="mb-1">Descripcion:</p>
                     <input type="text" name="txtDescripcion" id="txtDescripcion">
-                    <p>Precio:</p>
+                    <p class="mb-1">Precio:</p>
                     <input type="text" name="txtPrecio" id="txtPrecio">
-                    <p>Stock:</p>
+                    <p class="mb-1">Stock:</p>
                     <input type="text" name="txtStock" id="txtStock">
-                    <p>Categoria:</p>
+                    <p class="mb-1">Categoria:</p>
                     <input type="text" name="txtCategoria" id="txtCategoria">
-                    <input type="submit" value="Crear Producto">
+                    <input class="mt-2" type="submit" value="Crear Producto">
                 </form>
             </div>
             <div>
-                <form id="formDeleteProduct" action="" method="post">
-                    <p>ID Producto:</p>
+                <form class="d-flex flex-column mt-3 p-2 border rounded" id="formDeleteProduct" action="" method="post">
+                    <p class="mb-1">ID Producto:</p>
                     <input type="text" name="txtIdProducto" id="txtIdProducto">
-                    <input type="submit" value="Eliminar Producto">
+                    <input class="mt-2" type="submit" value="Eliminar Producto">
                 </form>
             </div>
         </div>
