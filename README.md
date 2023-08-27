@@ -2,7 +2,8 @@
 
 ## Installation
 
-Project installation and associated dependencies.\SSH:
+Project installation and associated dependencies.  
+SSH:
 ```
 $ git clone git@github.com:iavila87/classECommerce.git 
 ```
