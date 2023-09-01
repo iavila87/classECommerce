@@ -33,20 +33,18 @@ const socketServer = new Server(httpServer);
 /** Levanta el evento de nueva conexion */
 socketServer.on('connection', async (clientSocket) => {
     console.log('Cliente Conectado')
-    
-    const products = await pm.getProducts();
-    clientSocket.emit('message', products );
 
-    clientSocket.on("postProduct", async (data) => {
+    /*clientSocket.on("postProduct", async (data) => {
         console.log (await pm.addProduct(data));
         const products = await pm.getProducts();
         io.sockets.emit("message", products);
     });
+*/
 
-    clientSocket.on("deleteProduct", async (data) => {
-        console.log (await pm.deleteProduct(data));
-        const products = await pm.getProducts();
-        io.sockets.emit("message", products);
+    // Emite lista de productos actualizada
+    clientSocket.on('listProducts', data => {
+        console.log("pase por el listProducts")
+        socketServer.emit('updateProducts', data);
     });
 
 });
