@@ -1,6 +1,6 @@
 import { Router } from "express";
-import ProductManager from '../ProductManager.js'
-import { productsModel } from "../models/products.model.js"; 
+import ProductManager from '../dao/ProductManager.js'
+import { productsModel } from "../dao/models/products.model.js" 
 
 /** Inicializacion de ProductManager */
 const pm = new ProductManager('./data/products.json');

@@ -1,11 +1,12 @@
 import express from 'express'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
+import mongoose from 'mongoose'
 import viewRouter from './routers/views.router.js'
 import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
-import ProductManager from './ProductManager.js'
-import mongoose from 'mongoose'
+import ProductManager from './dao/ProductManager.js'
+
 
 mongoose.connect('mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority');
 
