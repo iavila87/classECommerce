@@ -7,9 +7,6 @@ import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
 import ProductManager from './dao/ProductManager.js'
 
-
-mongoose.connect('mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority');
-
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
 
@@ -28,27 +25,28 @@ app.use('/', viewRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 
-/** Levanta el servidor http en el puerto 8080 */
-const httpServer = app.listen(8080, () => console.log('Server Up!'));
-
-/** Levanta servidor websocket */
-const socketServer = new Server(httpServer);
-
-/** Levanta el evento de nueva conexion */
-socketServer.on('connection', async (clientSocket) => {
-    console.log('Cliente Conectado')
-
-    /*clientSocket.on("postProduct", async (data) => {
-        console.log (await pm.addProduct(data));
-        const products = await pm.getProducts();
-        io.sockets.emit("message", products);
-    });
-*/
-
-    // Emite lista de productos actualizada
-    clientSocket.on('listProducts', data => {
-        console.log("pase por el listProducts")
-        socketServer.emit('updateProducts', data);
+try{
+    /* conecto con la base de datos */
+    await mongoose.connect(
+        'mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority',{
+        dbName: 'ecommerce'
     });
 
-});
+    /** Levanta el servidor http en el puerto 8080 */
+    const httpServer = app.listen(8080, () => console.log('Server Up!'));
+
+    /** Levanta servidor websocket */
+    const socketServer = new Server(httpServer);
+
+    /** Levanta el evento de nueva conexion */
+    socketServer.on('connection', async (clientSocket) => {
+        console.log('Cliente Conectado')
+        // Emite lista de productos actualizada
+        clientSocket.on('listProducts', data => {
+            console.log("pase por el listProducts")
+            socketServer.emit('updateProducts', data);
+        });
+    });
+}catch(error){
+    console.log(error.message);
+}
