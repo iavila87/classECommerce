@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import viewRouter from './routers/views.router.js'
 import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
+import messagesModel from './dao/models/messages.model.js'
 import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
@@ -19,6 +20,7 @@ app.set('view engine', 'handlebars');           // confirma que el motor de plan
 /** */
 app.use(express.static('./src/public'));        // habilita directorio publico (acceso a los js y css) 
 app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 
 /* Routers */
 app.use('/', viewRouter);
@@ -46,7 +48,25 @@ try{
             console.log("pase por el listProducts")
             socketServer.emit('updateProducts', data);
         });
+
+        clientSocket.on('message', async (data) => {
+
+            /** por mongoose */
+            try{
+                const newMessage = data;
+                const generatedMessage = new messagesModel(newMessage);
+                await generatedMessage.save();
+            }catch(error){
+                console.log("error: " + error);
+            }
+            const messages = await messagesModel.find()//.lean().exec();
+            socketServer.emit('logs', messages);
+        });
+
     });
+
+    
+
 }catch(error){
     console.log(error.message);
 }
