@@ -25,7 +25,9 @@ router.get('/', async (req, res) => {
 
 router.get('/realtimeproducts', async (req, res) => {
     // consulta productos
-    const products = await pm.getProducts();
+    /** por filesystem */
+    //const products = await pm.getProducts();
+    const products = await productsModel.find().lean().exec();
     const emptyProducts = typeof products == 'string' || products.length == 0;
 
     res.render('realTimeProducts', { // como segundo argumento le paso argumentos como objetos
