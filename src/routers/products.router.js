@@ -1,6 +1,7 @@
 import { Router } from "express";
 import ProductManager from '../dao/ProductManager.js'
 import productsModel from "../dao/models/products.model.js" 
+import { paginate } from "mongoose-paginate-v2";
 
 /** Inicializacion de ProductManager */
 const pm = new ProductManager('./data/products.json');
@@ -11,26 +12,59 @@ const router = Router();
 /** get 'api/products' y 'api/products?limit='*/
 router.get('/', async (req, res) =>{
 
-    const limit = parseInt(req.query.limit);
+    /* const limit contiene el valor del queryparam(limit)
+    en caso de que este no exista por defecto se le asigna 10 */
+    const limit = req.query.limit || 10;
+    /* const page contiene el valor del queryparam(page)
+    en caso de que este no exista por defecto se le asigna 1 */
+    const page = req.query.page || 1;
+    const filters = {};
+    if(req.query.category)  filters.category = req.query.category;
+    if(req.query.stock)     filters.stock = req.query.stock;
+    /** paginacion */
+    const paginateOptions = { lean:true, limit, page };
+    if(req.query.sort === 'asc') paginateOptions.sort = {price : 1};
+    if(req.query.sort === 'desc') paginateOptions.sort = {price : -1};
+
+    try{
+        const products = await productsModel.paginate( filters, paginateOptions );
+        
+        let prevLink;
+        if(!req.query.page){
+            prevLink = `http://${req.hostname}:8080${req.originalUrl}&page=${products.prevPage}`;
+        }else{
+            const urlMod = req.originalUrl.replace(`page=${req.query.page}`,`page=${products.prevPage}`);
+            prevLink = `http://${req.hostname}:8080${urlMod}`;
+        }
+
+        let nextLink;
+        if(!req.query.page){
+            nextLink = `http://${req.hostname}:8080${req.originalUrl}&page=${products.nextPage}`;
+        }else{
+            const urlMod = req.originalUrl.replace(`page=${req.query.page}`,`page=${products.nextPage}`);
+            nextLink = `http://${req.hostname}:8080${urlMod}`;
+
+        }
+    /* *********** */
     /** Acceso por archivo
         const products = await pm.getProducts();
     */
-    /** Acceso por Mongoose */
-    try{
-        if(limit) {
-            const products = await productsModel.find().limit(limit);
-            return res.status(200).send( {status: "success", payload: products } );
-        }
-
-        const products = await productsModel.find();
-        /* 
-        if(typeof products == 'string') {
-            return res.status(404).send( { status: "error", error: products.split(' ').slice(2).join(' ') } );
-        }*/
-        res.status(200).send( {status: "success", payload: products } );
+        return res.status(200).send( { 
+            status:'success',
+            payload: products.docs,
+            totalPages: products.totalPages,
+            prevPage: products.prevPage,
+            nextPage: products.nextPage,
+            page: products.page,
+            hasPrevPage: products.hasPrevPage,
+            hasNextPage: products.hasNextPage,
+            prevLink: products.prevLink ? prevLink : null,
+            nextLink: products.nextLink ? nextLink : null
+        });
     }
     catch(error){
-        console.log("error de mongoose: "+error);
+        console.log("error: " + error);
+        return res.status(500).send( { status: "error", error: error.message } );
     }
 });
 
@@ -43,12 +77,10 @@ router.get('/:pid', async (req, res) =>{
     try{
         /** por mongoose */
         const product = await productsModel.find({_id:id});
-        /*if(typeof product == 'string'){
-            res.status(404).send( { status: "error", error: product.split(' ').slice(2).join(' ') } );
-        }*/
         return res.status(200).send( { status: "success", payload: product } );
     }catch(error){
         console.log("error: "+ error )
+        res.status(404).send( { status: "error", error: error.message } );
     }
 });
 
@@ -63,12 +95,10 @@ router.post('/', async (req, res) => {
         const generatedProduct = new productsModel(newProduct);
         await generatedProduct.save();
         // res.redirect('/'); redirecciona a la vista raiz
-        /*if(typeof newProduct == 'string'){
-            return res.status(404).send( { status: "error", error: newProduct.split(' ').slice(2).join(' ') } );
-        }*/
         res.status(201).send( { status: "success", payload: generatedProduct } );
     }catch(error){
         console.log("error: " + error);
+        return res.status(404).send( { status: "error", error: error.message } );
     }
 });
 
@@ -82,14 +112,10 @@ router.put('/:pid', async (req, res) =>{
     /** por mongoose */
     try{
         const product = await productsModel.updateOne({_id:id}, updateProduct);
-        /*
-        if(typeof product == 'string'){
-            return res.status(404).send( { status: "error", error: product.split(' ').slice(2).join(' ') } );
-        }*/
         res.status(200).send( { status: "success", payload: product } );
-
     }catch(error){
         console.log("error: "+error);
+        return res.status(404).send( { status: "error", error: error.message } );
     }
 });
 
@@ -101,15 +127,13 @@ router.delete('/:pid', async (req, res) =>{
     //const products = await pm.deleteProduct(id);
     /** por mongoose */
     try{
-        const deleteProduct = await productsModel.deleteOne({_id:id});
+        await productsModel.deleteOne({_id:id});
         const products = productsModel.find();
-        /*
-        if(typeof products == 'string'){
-            return res.status(404).send( { status: "error", error: products.split(' ').slice(2).join(' ') } );
-        }*/
+
         res.status(200).send( { status: "success", payload: products } );
     }catch(error){
         console.log("error: "+error);
+        return res.status(404).send( { status: "error", error: error.message } );
     }
 });
 

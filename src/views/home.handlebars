@@ -1,5 +1,19 @@
 <div class="container">
-        
+    <div class="row">
+        <div class="col-12">
+            {{#if paginateInfo.hasPrevPage}}
+                <a href="{{paginate.prevLink}}">Anterior</a>
+            {{/if}}
+            
+            {{#each paginateInfo.totalPages}}
+                <a href="{{this.link}}">{{this.page}}</a>
+            {{/each}}            
+            
+            {{#if paginateInfo.hasNextPage}}
+                <a href="{{paginate.nextLink}}">Siguiente</a>
+            {{/if}}
+        </div>
+    </div>
     <div class="row">
         <div class="col-6">
             <h1>Productos</h1>
@@ -13,6 +27,7 @@
             {{else}}
                 <table class="table table-striped">
                     <tr>
+                        <td></td>
                         <td>Codigo</td>
                         <td>Nombre</td>
                         <td>Descripcion</td>
@@ -23,6 +38,7 @@
                     </tr>
                     {{#each products}}
                     <tr>
+                        <td><button class="btn btn-success" onclick="addProductToCart('{{this._id}}')">Agregar</button></td>
                         <td>{{this.code}}</td>
                         <td>{{this.title}}</td>
                         <td>{{this.description}}</td>
@@ -38,3 +54,6 @@
     </div>
     
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src='/js/home.js'></script>

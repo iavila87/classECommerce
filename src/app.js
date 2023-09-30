@@ -27,12 +27,12 @@ app.use('/', viewRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 
+const mongoURI = 'mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority'; 
+const mongoDBName = 'ecommerce';
+
 try{
     /* conecto con la base de datos */
-    await mongoose.connect(
-        'mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority',{
-        dbName: 'ecommerce'
-    });
+    await mongoose.connect( mongoURI, { dbName: mongoDBName } );
 
     /** Levanta el servidor http en el puerto 8080 */
     const httpServer = app.listen(8080, () => console.log('Server Up!'));
@@ -69,4 +69,6 @@ try{
 
 }catch(error){
     console.log(error.message);
+    // si no me conecto a la base de datos termino el proceso
+    process.exit(-1);
 }
