@@ -2,6 +2,8 @@ import express from 'express'
 import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
 import mongoose from 'mongoose'
+import session from 'express-session'
+import MongoStore from 'connect-mongo'
 import viewRouter from './routers/views.router.js'
 import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
@@ -10,14 +12,27 @@ import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
+const mongoURI = 'mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority'; 
+const mongoDBName = 'ecommerce';
 
 /** Inicializacion de express */
 const app = express();
+
 /** Inicializacion de handlebars*/
 app.engine('handlebars', handlebars.engine());  // instancia handlebars
 app.set('views', './src/views');                // indica donde se encontraran las vistas 
 app.set('view engine', 'handlebars');           // confirma que el motor de plantillas es handlebars
 /** */
+
+app.use( session({
+    store: MongoStore.create({
+        mongoUrl: mongoURI, 
+        dbName: 'sessions'
+    }),
+    secret: 'secreto',
+    resave: true,
+    saveUninitialized: true
+}) );
 app.use(express.static('./src/public'));        // habilita directorio publico (acceso a los js y css) 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
@@ -27,8 +42,7 @@ app.use('/', viewRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 
-const mongoURI = 'mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority'; 
-const mongoDBName = 'ecommerce';
+
 
 try{
     /* conecto con la base de datos */

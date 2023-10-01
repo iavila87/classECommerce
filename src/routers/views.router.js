@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { auth } from '../middlewares/auth.middleware.js'
 import ProductManager from '../dao/ProductManager.js'
 import productsModel from "../dao/models/products.model.js"
 import cartsModel from "../dao/models/carts.model.js";
@@ -12,17 +13,19 @@ router.get('/', async (req, res) => {
     // const products = await pm.getProducts();
     
     // consulta productos por Mongoose
-    const products = await productsModel.find().lean().exec();
+    /*const products = await productsModel.find().lean().exec();
     
     const emptyProducts = typeof products == 'string' || products.length == 0;
 
     res.render('home', { // como segundo argumento le paso argumentos como objetos
         emptyProducts,
         products
-    });     // renderiza el home.handlebars en main.handlebars
+    });*/     // renderiza el home.handlebars en main.handlebars */
+    res.render('login', { // como segundo argumento le paso argumentos como objetos
+    });
 });
 
-router.get('/realtimeproducts', async (req, res) => {
+router.get('/realtimeproducts', auth, async (req, res) => {
     // consulta productos
     /** por filesystem */
     //const products = await pm.getProducts();
@@ -36,7 +39,7 @@ router.get('/realtimeproducts', async (req, res) => {
 });
 
 // chat
-router.get('/chat', async (req, res) => {
+router.get('/chat', auth, async (req, res) => {
     // consulta productos
     /** por filesystem */
     //const products = await pm.getProducts();
