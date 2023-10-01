@@ -1,6 +1,14 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+            <p>Usuario: {{user.first_name}} {{user.last_name}} 
+                (<a href="/profile">{{user.email}}</a>)
+            </p>
+            <p>Role: {{user.role}} (<a href="/api/sessions/logout">Logout</a>) </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             {{#if paginateInfo.hasPrevPage}}
                 <a href="{{paginate.prevLink}}">Anterior</a>
             {{/if}}

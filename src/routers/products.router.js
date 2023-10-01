@@ -4,7 +4,7 @@ import productsModel from "../dao/models/products.model.js"
 import { paginate } from "mongoose-paginate-v2";
 
 /** Inicializacion de ProductManager */
-const pm = new ProductManager('./data/products.json');
+//const pm = new ProductManager('./data/products.json');
 
 const router = Router();
 

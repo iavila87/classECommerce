@@ -3,15 +3,21 @@
         <div class="col-3">
             <div>
                 <h3>Login</h3>
-                <form action="/api/sessions/login" 
+                <form action="/api/sessions/register" 
                         method="post" 
                         class="d-flex flex-column mb-3 p-2 border rounded" 
                         id="formLogin">
+                    <p class="mb-1">Nombre:</p>
+                    <input type="text" name="first_name">
+                    <p class="mb-1">Apellido:</p>
+                    <input type="text" name="last_name">
                     <p class="mb-1">Email:</p>
                     <input type="text" name="email">
+                    <p class="mb-1">Edad:</p>
+                    <input type="text" name="age">
                     <p class="mb-1">Contraseña:</p>
                     <input type="text" name="password">
-                    <button type="submit" id="btnLogin" class="btn btn-primary">Login</button> <a href="/register">Registro</a>
+                    <button type="submit" id="btnRegistrar" class="btn btn-primary">Registar</button> <a href="/">Login</a>
                 </form>
             </div>
         </div>

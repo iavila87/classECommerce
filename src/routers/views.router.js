@@ -9,20 +9,15 @@ const pm = new ProductManager('./data/products.json');
 const router = Router();
 
 router.get('/', async (req, res) => {
-    // consulta productos por fileSystem
-    // const products = await pm.getProducts();
-    
-    // consulta productos por Mongoose
-    /*const products = await productsModel.find().lean().exec();
-    
-    const emptyProducts = typeof products == 'string' || products.length == 0;
-
-    res.render('home', { // como segundo argumento le paso argumentos como objetos
-        emptyProducts,
-        products
-    });*/     // renderiza el home.handlebars en main.handlebars */
     res.render('login', { // como segundo argumento le paso argumentos como objetos
     });
+});
+
+router.get('/register', async (req, res) => {
+    
+    res.render('register', { // como segundo argumento le paso argumentos como objetos
+    });
+
 });
 
 router.get('/realtimeproducts', auth, async (req, res) => {
@@ -53,7 +48,7 @@ router.get('/chat', auth, async (req, res) => {
 });
 
 // products
-router.get('/products', async (req, res) => {
+router.get('/products', auth, async (req, res) => {
 
     //const products = await productsModel.find().lean().exec();
     //const emptyProducts = typeof products == 'string' || products.length == 0;
@@ -102,7 +97,9 @@ router.get('/products', async (req, res) => {
             }
             totalPages.push( { page: i, link } );
         }
+        const user = req.session.user;
         res.render('home', { // como segundo argumento le paso argumentos como objetos
+            user,
             emptyProducts: false,
             products: products.docs,
             paginateInfo: {
@@ -120,7 +117,7 @@ router.get('/products', async (req, res) => {
 });
 
 // carts
-router.get('/carts/:cid', async (req, res) => {
+router.get('/carts/:cid', auth, async (req, res) => {
     
     const cid = req.params.cid;
     const cart = await cartsModel.findOne({_id:cid}).populate('products.product').lean().exec();

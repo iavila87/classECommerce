@@ -7,8 +7,9 @@ import MongoStore from 'connect-mongo'
 import viewRouter from './routers/views.router.js'
 import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
+import sessionRouter from './routers/sessions.router.js'
 import messagesModel from './dao/models/messages.model.js'
-import ProductManager from './dao/ProductManager.js'
+//import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
@@ -41,6 +42,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/', viewRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
+app.use('/api/sessions', sessionRouter);
 
 
 
