@@ -4,6 +4,8 @@ import { Server } from 'socket.io'
 import mongoose from 'mongoose'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
+import passport from 'passport'
+import initializePassport from './config/passport.config.js'
 import viewRouter from './routers/views.router.js'
 import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
@@ -34,6 +36,12 @@ app.use( session({
     resave: true,
     saveUninitialized: true
 }) );
+
+// lo inicializo como middleware
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static('./src/public'));        // habilita directorio publico (acceso a los js y css) 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))

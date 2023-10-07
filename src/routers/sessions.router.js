@@ -1,41 +1,40 @@
 import { Router } from "express";
 import usersModel from "../dao/models/users.model.js";
-
+import { createHash, isValidPassword } from "../utils.js";
+import passport from "passport";
 const router = Router();
 
 /** Metodo POST */
-router.post('/register', async (req, res) => {
-    
-    const userRegister = req.body;
-    const user = new usersModel(userRegister);
-    await user.save();
-    res.redirect('/');
+router.post('/register', 
+    passport.authenticate('register', {failureRedirect: '/sessions/failRegister'}) ,
+    async (req, res) => {
+        res.redirect('/');
+});
+
+router.get('/failRegister', (req, res) => {
+    res.send({status:'error', error:'passport register failed'})
 });
 
 /** Metodo POST */
-router.post('/login', async (req, res) => {
-    
-    const { email, password } = req.body;
-    /** por mongoose */
-    console.log("pase por login")
-    try{
-        const user = await usersModel.findOne({ email, password }).lean().exec();
-        
-        if(!user) return res.redirect('/');
-        
-        if(user.email == 'adminCoder@coder.com' && user.password == 'adminCod3r123'){
-            user.role = 'admin';
-        }else{
-            user.role = 'user';
+router.post('/login',
+    passport.authenticate('login', {failureRedirect: '/sessions/failLogin'}), 
+    async (req, res) => {
+        if(!req.user){
+            res.status(400).send({status: 'error', error:'invalid credentials'});
         }
 
-        req.session.user = user;
-            
-        res.redirect('/products');
+        req.session.user = {
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            email: req.user.email,
+            age: req.user.age
+        }
 
-    }catch(error){
-        return res.status(404).send( { status: "error", error: error.message } );
-    }
+        res.redirect('/products');
+});
+
+router.get('/failLogin', (req, res) => {
+    res.send({status:'error', error:'passport login failed'})
 });
 
 /** Metodo GET */
