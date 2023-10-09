@@ -48,7 +48,7 @@ router.get('/chat', auth, async (req, res) => {
 });
 
 // products
-router.get('/products', auth, async (req, res) => {
+router.get('/products'/*, auth*/, async (req, res) => {
 
     //const products = await productsModel.find().lean().exec();
     //const emptyProducts = typeof products == 'string' || products.length == 0;

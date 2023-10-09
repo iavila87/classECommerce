@@ -19,8 +19,9 @@ router.get('/failRegister', (req, res) => {
 router.post('/login',
     passport.authenticate('login', {failureRedirect: '/sessions/failLogin'}), 
     async (req, res) => {
+        console.log('req: '+req.user);
         if(!req.user){
-            res.status(400).send({status: 'error', error:'invalid credentials'});
+            return res.status(400).send({status: 'error', error:'invalid credentials'});
         }
 
         req.session.user = {
@@ -30,7 +31,7 @@ router.post('/login',
             age: req.user.age
         }
 
-        res.redirect('/products');
+        return res.redirect('/products');
 });
 
 router.get('/failLogin', (req, res) => {
@@ -50,5 +51,13 @@ router.get('/logout', async (req, res) => {
     
 });
 
+router.get('/github', passport.authenticate('github',{scope:['user:email']}), (req,res) => {
 
+});
+
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), 
+    async (req, res)=>{
+        req.session.user = req.user;
+        res.redirect('/products');
+    })
 export default router
