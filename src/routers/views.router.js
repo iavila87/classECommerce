@@ -100,6 +100,7 @@ router.get('/products', passportCall('jwt'), handlePolicies(['ADMIN']) , async (
             totalPages.push( { page: i, link } );
         }
         const user = req.user.user;
+        
         res.render('home', { // como segundo argumento le paso argumentos como objetos
             user,
             emptyProducts: false,

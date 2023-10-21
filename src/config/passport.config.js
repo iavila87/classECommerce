@@ -4,6 +4,7 @@ import local from 'passport-local'
 import GitHubStrategy from 'passport-github2'
 import usersModel from "../dao/models/users.model.js";
 import { JWT_PRIVATE_KEY, createHash, extractCookie, generateToken, isValidPassword } from "../utils.js";
+import cartsModel from "../dao/models/carts.model.js";
 
 const localStrategy = local.Strategy;
 const JWTStrategy = passport_jwt.Strategy;
@@ -22,12 +23,16 @@ const initializePassport = () => {
                 return done(null, false); // null se usa para indicar errores y false por ya existe el usuario
             }
 
+            const cartForNewUser = await cartsModel.create({ products: [] });
+
             const newUser = {
                 first_name,
                 last_name,
                 email,
                 age,
-                password: createHash(password)
+                password: createHash(password),
+                cart: cartForNewUser._id,
+                role: (email === 'adminCoder@coder.com') ? 'admin' : 'user'
             }
 
             const result = await usersModel.create(newUser);
