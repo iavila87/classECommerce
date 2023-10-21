@@ -24,3 +24,13 @@ export const passportCall = strategy => {
         })(req,res,next)
     }
 }
+
+export const handlePolicies = policies => (req, res, next) => {
+    const user = req.user.user || null;
+    if( !policies.includes(user.role.toUpperCase()) ) 
+    {
+        return res.status(403).send('<h1>Error: Need Auth</h1>');
+    }
+
+    return next();
+}

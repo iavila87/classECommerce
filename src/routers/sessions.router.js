@@ -24,13 +24,6 @@ router.post('/login',
             return res.status(400).send({status: 'error', error:'invalid credentials'});
         }
 
-        req.session.user = {
-            first_name: req.user.first_name,
-            last_name: req.user.last_name,
-            email: req.user.email,
-            age: req.user.age
-        }
-
         // antes de redireccionar guardo el token en la cookie
         return res.cookie(JWT_COOKIE_NAME, req.user.token).redirect('/products');
 });
@@ -41,14 +34,7 @@ router.get('/failLogin', (req, res) => {
 
 /** Metodo GET */
 router.get('/logout', async (req, res) => {
-    
-    req.session.destroy( error => {
-        if(error){
-            return res.status(500).send( { status: "error", error: error.message } );
-        }else{
-           return res.redirect('/');
-        }
-    })
+    req.clearCookie(JWT_COOKIE_NAME).redirect('/');
     
 });
 

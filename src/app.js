@@ -30,10 +30,7 @@ app.set('view engine', 'handlebars');           // confirma que el motor de plan
 /** */
 
 app.use( session({
-    store: MongoStore.create({
-        mongoUrl: mongoURI, 
-        dbName: 'sessions'
-    }),
+    
     secret: 'secreto',
     resave: true,
     saveUninitialized: true
