@@ -1,6 +1,6 @@
 import { Router } from "express";
 import usersModel from "../dao/models/users.model.js";
-import { JWT_COOKIE_NAME, createHash, isValidPassword } from "../utils.js";
+import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
 import passport from "passport";
 const router = Router();
 
@@ -19,7 +19,6 @@ router.get('/failRegister', (req, res) => {
 router.post('/login',
     passport.authenticate('login', {failureRedirect: '/sessions/failLogin'}), 
     async (req, res) => {
-        console.log('req: '+req.user);
         if(!req.user){
             return res.status(400).send({status: 'error', error:'invalid credentials'});
         }
@@ -38,6 +37,13 @@ router.get('/logout', async (req, res) => {
     
 });
 
+/** Metodo GET */
+router.get('/current', async (req, res) => {
+    const user = req.user.user
+    return res.status(200).send(user);
+    
+});
+
 router.get('/github', passport.authenticate('github',{scope:['user:email']}), (req,res) => {
 
 });
@@ -47,4 +53,6 @@ router.get('/githubcallback', passport.authenticate('github', {failureRedirect: 
         req.session.user = req.user;
         res.redirect('/products');
     })
+
+
 export default router
