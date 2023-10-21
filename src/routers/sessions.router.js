@@ -1,6 +1,6 @@
 import { Router } from "express";
 import usersModel from "../dao/models/users.model.js";
-import { createHash, isValidPassword } from "../utils.js";
+import { JWT_COOKIE_NAME, createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
 const router = Router();
 
@@ -31,7 +31,8 @@ router.post('/login',
             age: req.user.age
         }
 
-        return res.redirect('/products');
+        // antes de redireccionar guardo el token en la cookie
+        return res.cookie(JWT_COOKIE_NAME, req.user.token).redirect('/products');
 });
 
 router.get('/failLogin', (req, res) => {

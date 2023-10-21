@@ -3,6 +3,8 @@ import { auth } from '../middlewares/auth.middleware.js'
 import ProductManager from '../dao/ProductManager.js'
 import productsModel from "../dao/models/products.model.js"
 import cartsModel from "../dao/models/carts.model.js";
+import passport from "passport";
+import { passportCall } from "../utils.js";
 /** Inicializacion de ProductManager */
 const pm = new ProductManager('./data/products.json');
 
@@ -48,7 +50,7 @@ router.get('/chat', auth, async (req, res) => {
 });
 
 // products
-router.get('/products'/*, auth*/, async (req, res) => {
+router.get('/products', passportCall('jwt'), async (req, res) => {
 
     //const products = await productsModel.find().lean().exec();
     //const emptyProducts = typeof products == 'string' || products.length == 0;

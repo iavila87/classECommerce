@@ -1,10 +1,12 @@
 import passport from "passport";
+import passport_jwt, { Strategy } from 'passport-jwt' 
 import local from 'passport-local'
 import GitHubStrategy from 'passport-github2'
 import usersModel from "../dao/models/users.model.js";
-import { createHash, isValidPassword } from "../utils.js";
+import { JWT_PRIVATE_KEY, createHash, extractCookie, generateToken, isValidPassword } from "../utils.js";
 
 const localStrategy = local.Strategy;
+const JWTStrategy = passport_jwt.Strategy;
 
 const initializePassport = () => {
     
@@ -51,12 +53,23 @@ const initializePassport = () => {
                 return done(null, false);
             }
 
+            //genero el token
+            const token = generateToken(user);
+            user.token = token;
+
             return done(null, user);
 
         }catch(error){
 
         }
     }));
+
+    passport.use('jwt', new JWTStrategy({
+        jwtFromRequest: passport_jwt.ExtractJwt.fromExtractors([extractCookie]),
+        secretOrKey: JWT_PRIVATE_KEY
+    }, async (jwtPayload, done) =>{
+        done(null, jwtPayload)
+    } ) );
 
     passport.use('github', new GitHubStrategy({
         clientID: 'Iv1.392a5bdd41d2ea18',

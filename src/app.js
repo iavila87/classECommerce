@@ -3,6 +3,7 @@ import handlebars from 'express-handlebars'
 import { Server } from 'socket.io'
 import mongoose from 'mongoose'
 import session from 'express-session'
+import cookieParser from 'cookie-parser'
 import MongoStore from 'connect-mongo'
 import passport from 'passport'
 import initializePassport from './config/passport.config.js'
@@ -11,6 +12,7 @@ import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
 import sessionRouter from './routers/sessions.router.js'
 import messagesModel from './dao/models/messages.model.js'
+import { passportCall } from './utils.js'
 //import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
@@ -41,7 +43,7 @@ app.use( session({
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cookieParser());
 app.use(express.static('./src/public'));        // habilita directorio publico (acceso a los js y css) 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
