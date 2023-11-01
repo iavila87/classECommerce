@@ -13,12 +13,14 @@ import cartRouter from './routers/carts.router.js'
 import sessionRouter from './routers/sessions.router.js'
 import messagesModel from './dao/models/messages.model.js'
 import { passportCall } from './utils.js'
+import config from './config/config.js'
 //import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
-const mongoURI = 'mongodb+srv://ivanavila:Lexaa.23@cluster0.e811c5s.mongodb.net/?retryWrites=true&w=majority'; 
-const mongoDBName = 'ecommerce';
+const PORT = config.apiserver.port;
+const mongoURI = config.mongo.uri; 
+const mongoDBName = config.mongo.dbname;
 
 /** Inicializacion de express */
 const app = express();
@@ -58,7 +60,7 @@ try{
     await mongoose.connect( mongoURI, { dbName: mongoDBName } );
 
     /** Levanta el servidor http en el puerto 8080 */
-    const httpServer = app.listen(8080, () => console.log('Server Up!'));
+    const httpServer = app.listen(PORT, () => console.log('Server Up!'));
 
     /** Levanta servidor websocket */
     const socketServer = new Server(httpServer);
