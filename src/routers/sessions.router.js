@@ -1,15 +1,15 @@
 import { Router } from "express";
-import usersModel from "../dao/models/users.model.js";
+import {
+            registerSessionController,
+
+} from "../controllers/sessions.controller.js"
 import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
 import passport from "passport";
 const router = Router();
 
 /** Metodo POST */
 router.post('/register', 
-    passport.authenticate('register', {failureRedirect: '/sessions/failRegister'}) ,
-    async (req, res) => {
-        res.redirect('/');
-});
+    passport.authenticate('register', {failureRedirect: '/sessions/failRegister'}), registerSessionController);
 
 router.get('/failRegister', (req, res) => {
     res.send({status:'error', error:'passport register failed'})
