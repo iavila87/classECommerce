@@ -17,6 +17,7 @@ export const getAllProductsController = async (req, res) => {
     if(req.query.sort === 'desc') paginateOptions.sort = {price : -1};
 
     try{
+        // aca cambiar al servicio
         const products = await productsModel.paginate( filters, paginateOptions );
         
         let prevLink;
@@ -36,9 +37,7 @@ export const getAllProductsController = async (req, res) => {
 
         }
     /* *********** */
-    /** Acceso por archivo
-        const products = await pm.getProducts();
-    */
+    
         return res.status(200).send( { 
             status:'success',
             payload: products.docs,
@@ -65,6 +64,7 @@ export const getProductByIdController = async (req, res) =>{
     //const product = await pm.getProductById(id);
     try{
         /** por mongoose */
+        // aca va el service
         const product = await productsModel.find({_id:id});
         return res.status(200).send( { status: "success", payload: product } );
     }catch(error){
@@ -80,6 +80,7 @@ export const createProductController = async (req, res) => {
     try{
         const newProduct = req.body;
         newProduct.status = true;
+        // aca va service
         const generatedProduct = new productsModel(newProduct);
         await generatedProduct.save();
         // res.redirect('/'); redirecciona a la vista raiz
@@ -98,6 +99,7 @@ export const updateProductController = async (req, res) =>{
     //const product = await pm.updateProduct(id, req.body);
     /** por mongoose */
     try{
+        // aca va service
         const product = await productsModel.updateOne({_id:id}, updateProduct);
         res.status(200).send( { status: "success", payload: product } );
     }catch(error){
@@ -113,6 +115,7 @@ export const deleteProductController = async (req, res) =>{
     //const products = await pm.deleteProduct(id);
     /** por mongoose */
     try{
+        // aca va service
         await productsModel.deleteOne({_id:id});
         const products = productsModel.find();
 

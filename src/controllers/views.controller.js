@@ -15,8 +15,6 @@ export const registerViewController = async (req, res) => {
 
 export const realTimeProductsViewController = async (req, res) => {
     // consulta productos
-    /** por filesystem */
-    //const products = await pm.getProducts();
     const products = await productsModel.find().lean().exec();
     const emptyProducts = typeof products == 'string' || products.length == 0;
 

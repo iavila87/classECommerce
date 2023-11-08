@@ -7,6 +7,7 @@ export const createCartController = async (req, res) => {
     
     /** por mongoose */
     try{
+        // aca va service
         const generatedCart = new cartsModel( { products: [] } );
         await generatedCart.save();
         // res.redirect('/'); redirecciona a la vista raiz
@@ -28,7 +29,9 @@ export const addProductToCartController = async (req, res) => {
     
     /** por mongoose */
     try{
+        // aca va service
         const cart = await cartsModel.findOne({_id:cid}).lean().exec();
+        // aca va service
         const product = await productsModel.find({_id:pid});
         console.log("cart " + JSON.stringify(cart))
 
@@ -61,6 +64,7 @@ export const getCartByIdController = async (req, res) =>{
 
     /** por mongoose */
     try{
+        // aca va service
         const cart = await cartsModel.findOne({_id:id});
         /*if(typeof cart == 'string'){
             return res.status(404).send( { status: "error", error: cart.split(' ').slice(2).join(' ') } );
@@ -78,16 +82,17 @@ export const deleteCartController = async (req, res) =>{
     const cid = req.params.cid;
     const pid = req.params.pid;
     try{
+        // aca va service
         const cart = await cartsModel.findById(cid);
         if(cart === null){
             res.status(404).send({ status: "error", error: "El carrrito no se encontro" });
         }
-
+        // aca va service
         const product = await productsModel.findById(pid);
         if(product === null){
             res.status(404).send({ status: "error", error: "El producto no se encontro" });
         }
-
+        // aca va service
         const deleteProduct = cart.products.find(item => item.product == pid);
             
         if(!deleteProduct){
@@ -95,6 +100,7 @@ export const deleteCartController = async (req, res) =>{
         }else{
             cart.products = cart.products.filter(item => item.product.toString() !== pid);
         }
+        // aca va service
         const updateCart = await cartsModel.findByIdAndUpdate(cid, cart, {returnDocument: 'after'});
         
         res.status(200).send({ status: "success", payload: updateCart });
@@ -108,6 +114,7 @@ export const updateCartController = async (req, res) =>{
 
     const cid = req.params.cid
     try{
+        // aca va service
         const cart = await cartsModel.findById(cid);
         if(cart === null){
             res.status(404).send({ status: "error", error: "El carrrito no se encontro" });
@@ -131,7 +138,7 @@ export const updateCartController = async (req, res) =>{
             if( products[i].quantity === 0 ){
                 res.status(400).send({ status: "error", error: "el campo quantity no puede ser 0" }); 
             }
-
+            // aca va service
             const auxProduct = await productsModel.findById(products[i].product);
             if(auxProduct == null){
                 res.status(400).send({ status: "error", error: "el producto no existe" }); 
@@ -139,6 +146,7 @@ export const updateCartController = async (req, res) =>{
         }
 
         cart.products = products;
+        // aca va service
         const updateCart = await cartsModel.findByIdAndUpdate(cid, cart, {returnDocument: 'after'});
         
         res.status(200).send({ status: "success", payload: updateCart });
@@ -154,11 +162,13 @@ export const updateProductInCartController = async (req, res) =>{
     const cid = req.params.cid
     const pid = req.params.pid
     try{
+        // aca va service
         const cart = await cartsModel.findById(cid);
         if(cart === null){
             res.status(404).send({ status: "error", error: "El carrrito no se encontro" });
         }
 
+        // aca va service
         const product = await productsModel.findById(pid);
         if(product === null){
             res.status(404).send({ status: "error", error: "El producto no se encontro" });
@@ -183,7 +193,7 @@ export const updateProductInCartController = async (req, res) =>{
                 console.log("entre al product == pid");
             }
         });
-
+        // aca va service
         const updateCart = await cartsModel.findByIdAndUpdate(cid, cart, {returnDocument: 'after'});
         
         res.status(200).send({ status: "success", payload: updateCart });
@@ -198,12 +208,14 @@ export const deleteProductInCartController = async (req, res) =>{
         
     const cid = req.params.cid;
     try{
+        // aca va service
         const cart = await cartsModel.findById(cid);
         if(cart === null){
             res.status(404).send({ status: "error", error: "El carrrito no se encontro" });
         }
 
         cart.products = [];
+        // aca va service
         const updateCart = await cartsModel.findByIdAndUpdate(cid, cart, {returnDocument: 'after'});
         
         res.status(200).send({ status: "success", payload: updateCart });

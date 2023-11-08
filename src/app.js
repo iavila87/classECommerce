@@ -14,6 +14,7 @@ import sessionRouter from './routers/sessions.router.js'
 import messagesModel from './dao/models/messages.model.js'
 import { passportCall } from './utils.js'
 import config from './config/config.js'
+import MongoClient from './dao/MongoClient.js'
 //import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
@@ -24,6 +25,9 @@ const mongoDBName = config.mongo.dbname;
 
 /** Inicializacion de express */
 const app = express();
+
+let client = new MongoClient();
+client.connect();
 
 /** Inicializacion de handlebars*/
 app.engine('handlebars', handlebars.engine());  // instancia handlebars
@@ -57,7 +61,7 @@ app.use('/api/sessions', sessionRouter);
 
 try{
     /* conecto con la base de datos */
-    await mongoose.connect( mongoURI, { dbName: mongoDBName } );
+    //await mongoose.connect( mongoURI, { dbName: mongoDBName } );
 
     /** Levanta el servidor http en el puerto 8080 */
     const httpServer = app.listen(PORT, () => console.log('Server Up!'));
