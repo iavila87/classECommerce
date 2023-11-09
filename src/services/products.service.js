@@ -22,7 +22,15 @@ export default class ProductsService {
         return await this.productsDAO.getById(id);
     }
 
-    /*addUser = async (product) => {
+    addProduct = async (product) => {
         return await this.productsDAO.save(product);
-    }*/
+    }
+
+    updateProduct = async ( id, product ) => {
+        return await this.productsDAO.update(id, product);
+    }
+
+    deleteProduct = async (id) => {
+        return await this.productsDAO.delete(id);
+    }
 }
