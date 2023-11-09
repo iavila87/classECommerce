@@ -12,9 +12,9 @@ export default class ProductsService {
         this.productsDAO = await PersistenceFactory.getPersistence();
     } 
 
-    getProducts = async () => {
+    getProducts = async ( filters, paginateOptions ) => {
 
-        return await this.productsDAO.getAll();
+        return await this.productsDAO.getAll(filters, paginateOptions);
     }
 
     getProductById = async (id) => {

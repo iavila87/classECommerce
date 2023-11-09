@@ -1,6 +1,6 @@
 import PersistenceFactory from "../dao/carts.PersistenceFactory.js";
 
-export default class ProductsService {
+export default class CartsService {
 
     constructor () {
         //this.usersDAO = new UsersDAOMongo();
