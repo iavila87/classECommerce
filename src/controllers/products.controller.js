@@ -1,7 +1,9 @@
 import productsModel from "../dao/models/products.model.js";
-import ProductsService from "../services/products.service.js";
+//import ProductsService from "../services/products.service.js";
 
-const productsService = new ProductsService();
+import { ProductsService } from '../services/index.js'
+
+//const productsService = new ProductsService();
 
 export const getAllProductsController = async (req, res) => {
 
@@ -20,7 +22,8 @@ export const getAllProductsController = async (req, res) => {
     if(req.query.sort === 'desc') paginateOptions.sort = {price : -1};
 
     try{
-        const products = productsService.getProducts( filters, paginateOptions );
+        const products = await ProductsService.getAll(filters, paginateOptions)
+        //const products = productsService.getProducts( filters, paginateOptions );
         //const products = await productsModel.paginate( filters, paginateOptions );
         
         let prevLink;
@@ -63,7 +66,8 @@ export const getProductByIdController = async (req, res) =>{
     const id = req.params.pid;
     
     try{
-        const product = productsService.getProductById( id );
+        const product = await ProductsService.getById(id);
+        //const product = productsService.getProductById( id );
         //const product = await productsModel.find({_id:id});
         return res.status(200).send( { status: "success", payload: product } );
     }catch(error){
@@ -76,8 +80,9 @@ export const createProductController = async (req, res) => {
     try{
         const newProduct = req.body;
         newProduct.status = true;
-        
-        const generatedProduct = productsService.addProduct(newProduct);
+
+        const generatedProduct = await ProductsService.create(newProduct);
+        //const generatedProduct = productsService.addProduct(newProduct);
         //const generatedProduct = new productsModel(newProduct);
         //await generatedProduct.save();
         // res.redirect('/'); redirecciona a la vista raiz
@@ -94,7 +99,8 @@ export const updateProductController = async (req, res) =>{
     const updateProduct = req.body;
     
     try{
-        const product = productsService.updateProduct( id, updateProduct);
+        const product = await ProductsService.update(id, updateProduct);
+        //const product = productsService.updateProduct( id, updateProduct);
         //const product = await productsModel.updateOne({_id:id}, updateProduct);
         res.status(200).send( { status: "success", payload: product } );
     }catch(error){
@@ -108,8 +114,10 @@ export const deleteProductController = async (req, res) =>{
 
     try{
         // aca va service
-        productsService.deleteProduct( id );
-        const products = productsService.getProducts();
+        await ProductsService.delete(id);
+        const products = await ProductsService.getAll();
+        //productsService.deleteProduct( id );
+        //const products = productsService.getProducts();
         //await productsModel.deleteOne({_id:id});
         //const products = productsModel.find();
         res.status(200).send( { status: "success", payload: products } );
