@@ -1,8 +1,8 @@
 import cartsModel from "../dao/models/carts.model.js"
 import productsModel from "../dao/models/products.model.js"
 
-import { ProductsService } from '../services/index.js'
-import { CartsService } from '../services/index.js'
+import { ProductsService } from '../repositories/index.js'
+import { CartsService } from '../repositories/index.js'
 
 
 export const createCartController = async (req, res) => {

@@ -1,3 +1,4 @@
+import UsersDTO from "../dto/users.dto.js";
 import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
 
 export const registerSessionController = async (req, res) => {
@@ -27,7 +28,8 @@ export const logoutSessiontroller = async (req, res) => {
 
 export const currentSessionController = async (req, res) => {
     const user = req.user.user
-    return res.status(200).send(user);
+    const userDTO = new UsersDTO(user);
+    return res.status(200).send(userDTO);
     
 }
 
