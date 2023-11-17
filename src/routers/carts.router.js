@@ -5,7 +5,8 @@ import  {   createCartController,
             deleteCartController,
             updateCartController,
             updateProductInCartController,
-            deleteProductInCartController
+            deleteProductInCartController,
+            purchaseController
         } from "../controllers/carts.controller.js"
         
 import CartManager from '../dao/CartManager.js'
@@ -31,5 +32,8 @@ router.put('/:cid', updateCartController);
 router.put('/:cid/product/:pid', updateProductInCartController);
 /** Elimina un product de un cart */
 router.delete('/:cid', deleteProductInCartController);
+
+// carts, la ruta /:cid/purchase,
+router.get('/:cid/purchase', purchaseController);
 
 export default router;
