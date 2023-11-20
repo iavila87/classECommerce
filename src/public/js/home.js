@@ -24,7 +24,7 @@ addProductToCart = (pid, cid) => {
     })
     .then(result => result.json())
     .then(result => {
-        
+        console.log("aca tengo cid?");
         if(result.status === 'error') throw new Error(result.error);
 
         const Toast = Swal.mixin({

@@ -9,6 +9,8 @@ import cartsModel from "../dao/models/carts.model.js";
 const localStrategy = local.Strategy;
 const JWTStrategy = passport_jwt.Strategy;
 
+import { UsersService, CartsService } from '../repositories/index.js'
+
 const initializePassport = () => {
     
     passport.use('register', new localStrategy({
@@ -18,12 +20,14 @@ const initializePassport = () => {
         // logica
         const { first_name, last_name, email, age } = req.body;
         try{
-            const user = await usersModel.findOne({ email: username });
+            console.log("passport");
+            const user = await UsersService.get(username);
+            console.log("passport user: " + JSON.stringify( user ));
             if(user){ // verifica si existe el usuario
                 return done(null, false); // null se usa para indicar errores y false por ya existe el usuario
             }
 
-            const cartForNewUser = await cartsModel.create({ products: [] });
+            const cartForNewUser = await CartsService.create();
 
             const newUser = {
                 first_name,
@@ -35,7 +39,7 @@ const initializePassport = () => {
                 role: (email === 'adminCoder@coder.com') ? 'admin' : 'user'
             }
 
-            const result = await usersModel.create(newUser);
+            const result = await UsersService.create(newUser);
             return done(null, result);
 
         }catch(error){
@@ -48,8 +52,9 @@ const initializePassport = () => {
         usernameField: 'email'
     }, async (username, password, done) => {
         try{
-            const user = await usersModel.findOne({email: username});
-
+            console.log("username: "+ username + " pass " + password)
+            const user = await UsersService.get(username); //await usersModel.findOne({email: username});
+            console.log("user login " +JSON.stringify(user));
             if(!user){
                 return done(null,false);
             }
@@ -83,10 +88,10 @@ const initializePassport = () => {
     }, async (accessToken, refreshToken, profile, done)=>{
         
         try{
-            const user = await usersModel.findOne({email:profile._json.email});
+            const user = await UsersService.get(username);//await usersModel.findOne({email:profile._json.email});
             if(user) return done(null,user);
 
-            const newUser = await usersModel.create({
+            const newUser = await UsersService.create({ //await usersModel.create({
                 first_name:profile._json.name,
                 last_name:'',
                 email:profile._json.email,
@@ -106,8 +111,8 @@ const initializePassport = () => {
         done( null, user._id );
     });
 
-    passport.deserializeUser(async (id, done) =>{
-        const user = await usersModel.findById(id);
+    passport.deserializeUser(async (email, done) =>{
+        const user =  await UsersService.get(email);//await usersModel.findById(id);
         done(null,user);
     });
 

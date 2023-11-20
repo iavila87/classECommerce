@@ -64,6 +64,8 @@ try{
     //await mongoose.connect( mongoURI, { dbName: mongoDBName } );
 
     /** Levanta el servidor http en el puerto 8080 */
+
+    console.log("Port: "+ PORT);
     const httpServer = app.listen(PORT, () => console.log('Server Up!'));
 
     /** Levanta servidor websocket */

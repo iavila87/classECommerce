@@ -1,6 +1,6 @@
 import productsModel from "../dao/models/products.model.js"
 import cartsModel from "../dao/models/carts.model.js";
-
+import { ProductsService } from '../repositories/index.js'
 export const loginViewController = async (req, res) => {
     res.render('login', { // como segundo argumento le paso argumentos como objetos
     });
@@ -56,7 +56,7 @@ export const productsViewController = async (req, res) => {
     if(req.query.sort === 'asc') paginateOptions.sort = {price : 1};
     if(req.query.sort === 'desc') paginateOptions.sort = {price : -1};
     try{
-        const products = await productsModel.paginate( filters, paginateOptions );
+        const products = await ProductsService.getAll(filters, paginateOptions); //await productsModel.paginate( filters, paginateOptions );
         
         let prevLink;
         if(!req.query.page){

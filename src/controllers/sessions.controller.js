@@ -2,18 +2,21 @@ import UsersDTO from "../dto/users.dto.js";
 import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
 
 export const registerSessionController = async (req, res) => {
+    console.log("Ok")
     res.redirect('/');
 }
 
 export const failRegisterSessionController = (req, res) => {
+    console.log("Error")
     res.send({status:'error', error:'passport register failed'})
 }
 
 export const loginSessionController = async (req, res) => {
+    console.log(JSON.stringify("req.user "+req.user));
     if(!req.user){
         return res.status(400).send({status: 'error', error:'invalid credentials'});
     }
-
+    console.log("pase por aca");
     // antes de redireccionar guardo el token en la cookie
     return res.cookie(JWT_COOKIE_NAME, req.user.token).redirect('/products');
 }

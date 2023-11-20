@@ -22,7 +22,9 @@ export const getAllProductsController = async (req, res) => {
     if(req.query.sort === 'desc') paginateOptions.sort = {price : -1};
 
     try{
+        console.log("LLEgue al paginate");
         const products = await ProductsService.getAll(filters, paginateOptions)
+        console.log("products PAginate: " + JSON.stringify(products));
         //const products = productsService.getProducts( filters, paginateOptions );
         //const products = await productsModel.paginate( filters, paginateOptions );
         

@@ -11,9 +11,24 @@ export default class UsersDAOMongo {
         results = await this.model.find();
         return results;
     }
+    
+    getById = async (id) => {
+        console.log("iddao: "+id);
+        const result = await this.model.findOne({_id:id});
+        console.log("traje user by id: "+ JSON.stringify(result));
+        return result;
+    }
+
+    get = async (email) => {
+        console.log("emaildao: "+email);
+        const result = await this.model.findOne({ email: email });
+        console.log("traje user: "+ JSON.stringify(result));
+        return result;
+    }
 
     save = async (user) => {
-        let result = await this.model.create(user);
+        const result = await this.model.create(user);
+        console.log("agregue user: "+ JSON.stringify(result) );
         return result;
     }
 

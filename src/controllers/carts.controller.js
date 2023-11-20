@@ -28,9 +28,9 @@ export const addProductToCartController = async (req, res) => {
     const pid = req.params.pid;
     
     try{
-        const cart = await ProductsService.getById(id);
+        const cart = await CartsService.getById(cid);
         //const cart = await cartsModel.findOne({_id:cid}).lean().exec();
-        const product = await ProductsService.getById(id);
+        const product = await ProductsService.getById(pid);
         //const product = await productsModel.find({_id:pid});
         console.log("cart " + JSON.stringify(cart))
 
