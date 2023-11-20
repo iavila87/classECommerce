@@ -230,7 +230,6 @@ export const deleteProductInCartController = async (req, res) =>{
 
 
 
-///// verrrr
 export const purchaseController = async(req, res) => {
     try {
         const cid = req.params.cid
@@ -260,9 +259,7 @@ export const purchaseController = async(req, res) => {
         }
         //elimino del carrito los productos que se han comparado
         await CartsService.update(cid, { products: productsAfterPurchase });
-        //creamos el Ticket
-        
-        //// crear service 
+        //creo un Ticket
         const result = await TicketsService.create({
             code: shortid.generate(),
             products: productsToTicket,

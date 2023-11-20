@@ -19,12 +19,12 @@ import { handlePolicies, passportCall } from "../utils.js";
 const router = Router();
 router.get('/', loginViewController);
 router.get('/register', registerViewController);
-router.get('/realtimeproducts', auth, realTimeProductsViewController);
+router.get('/realtimeproducts', handlePolicies(['USER', 'ADMIN']), realTimeProductsViewController);
 // chat
-router.get('/chat', auth, chatViewController);
+router.get('/chat', handlePolicies(['USER']), chatViewController);
 // products
-router.get('/products', passportCall('jwt'), handlePolicies(['ADMIN']), productsViewController);
+router.get('/products', passportCall('jwt'), handlePolicies(['USER', 'ADMIN']), productsViewController);
 // carts
-router.get('/carts/:cid', auth, cartViewController);
+router.get('/carts/:cid', handlePolicies(['USER', 'ADMIN']), cartViewController);
 
 export default router

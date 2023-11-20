@@ -1,7 +1,7 @@
 import productsModel from "../dao/models/products.model.js";
 //import ProductsService from "../services/products.service.js";
 
-import { ProductsService } from '../services/index.js'
+import { ProductsService } from '../repositories/index.js'
 
 //const productsService = new ProductsService();
 
