@@ -2,6 +2,21 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 
+import { fakerES as faker } from '@faker-js/faker';
+
+export const generateProducts = () => {
+    return {
+        title: faker.commerce.productName(),
+	    description: faker.commerce.productName(),
+	    code: faker.random.numeric(1),
+	    price: faker.commerce.price(),
+	    status: true,
+	    stock: faker.random.numeric(1),
+	    id: faker.database.mongodbObjectId()
+
+    }
+}
+
 export const JWT_PRIVATE_KEY = 'claveSecreta';
 export const JWT_COOKIE_NAME = 'myCookie'
 

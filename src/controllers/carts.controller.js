@@ -5,11 +5,16 @@ import { ProductsService } from '../repositories/index.js'
 import { CartsService } from '../repositories/index.js'
 import { TicketsService } from '../repositories/index.js'
 
+import CustomError from '../services/errors/customErrors.js'
+import EErros from '../services/errors/enums.js'
+import { generateErrorInfo } from '../services/errors/info.js'
+
 
 export const createCartController = async (req, res) => {
     
     try{
         const generatedCart = await CartsService.create();
+
         //const generatedCart = new cartsModel( { products: [] } );
         //await generatedCart.save();
         // res.redirect('/'); redirecciona a la vista raiz
@@ -18,7 +23,14 @@ export const createCartController = async (req, res) => {
         }*/
         res.status(201).send( { status: "success", payload: generatedCart } );
     }catch(error){
-        console.log('error: '+error);
+
+        CustomError.createError({
+            name: "Cart creation error",
+            cause: generateErrorInfo(null),
+            message: "Error trying to create a cart",
+            code: EErros.DATABASES_ERROR
+        })
+        
     }
 }
 

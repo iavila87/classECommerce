@@ -1,6 +1,7 @@
 import productsModel from "../dao/models/products.model.js"
 import cartsModel from "../dao/models/carts.model.js";
 import { ProductsService } from '../repositories/index.js'
+import { generateProducts } from "../utils.js";
 export const loginViewController = async (req, res) => {
     res.render('login', { // como segundo argumento le paso argumentos como objetos
     });
@@ -36,6 +37,16 @@ export const chatViewController = async (req, res) => {
         products
     });     // renderiza el home.handlebars en main.handlebars
 }
+
+
+export const mockingProductsViewController = async (req, res) => {
+    const products = []
+    for (let index = 0; index < 100; index++) {
+        products.push(generateProducts())
+    }
+    res.send({ status: 'success', payload: products })
+}
+
 
 export const productsViewController = async (req, res) => {
 

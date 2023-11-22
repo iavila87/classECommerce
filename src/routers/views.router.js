@@ -5,7 +5,8 @@ import {
             realTimeProductsViewController,
             chatViewController,
             productsViewController,
-            cartViewController
+            cartViewController,
+            mockingProductsViewController
         } from "../controllers/views.controller.js"
 import { auth } from '../middlewares/auth.middleware.js'
 import ProductManager from '../dao/ProductManager.js'
@@ -20,6 +21,8 @@ const router = Router();
 router.get('/', loginViewController);
 router.get('/register', registerViewController);
 router.get('/realtimeproducts', handlePolicies(['USER', 'ADMIN']), realTimeProductsViewController);
+// mock
+router.get('/mockingproducts', mockingProductsViewController);
 // chat
 router.get('/chat', handlePolicies(['USER']), chatViewController);
 // products
