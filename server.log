@@ -1,0 +1,6 @@
+{"level":"debug","message":"Test de logger Debug"}
+{"level":"http","message":"Test de logger Http"}
+{"level":"info","message":"Test de logger Info"}
+{"level":"warning","message":"Test de logger Warning"}
+{"level":"error","message":"Test de logger Error"}
+{"level":"fatal","message":"Test de logger Fatal"}

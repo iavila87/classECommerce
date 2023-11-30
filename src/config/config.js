@@ -4,6 +4,7 @@ dotenv.config();
 
 export default {
     app: {
+        environment: process.env.ENVIRONMENT,
         persistence: process.env.PERSISTENCE
     },
     apiserver: {

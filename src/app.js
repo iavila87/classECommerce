@@ -12,6 +12,7 @@ import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
 import sessionRouter from './routers/sessions.router.js'
 import messagesModel from './dao/models/messages.model.js'
+import loggerTestRouter from './routers/loggerTest.router.js'
 import { passportCall } from './utils.js'
 import config from './config/config.js'
 import MongoClient from './dao/MongoClient.js'
@@ -56,6 +57,7 @@ app.use('/', viewRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/api/sessions', sessionRouter);
+app.use('/loggerTest', loggerTestRouter);
 
 
 
