@@ -16,6 +16,7 @@ import loggerTestRouter from './routers/loggerTest.router.js'
 import { passportCall } from './utils.js'
 import config from './config/config.js'
 import MongoClient from './dao/MongoClient.js'
+import logger from './logger.js'
 //import ProductManager from './dao/ProductManager.js'
 
 /** Inicializacion de ProductManager */
@@ -66,31 +67,27 @@ try{
     //await mongoose.connect( mongoURI, { dbName: mongoDBName } );
 
     /** Levanta el servidor http en el puerto 8080 */
-
-    console.log("Port: "+ PORT);
-    const httpServer = app.listen(PORT, () => console.log('Server Up!'));
+    logger.info("Port: "+ PORT)
+    const httpServer = app.listen(PORT, () => logger.info('Server Up!'));
 
     /** Levanta servidor websocket */
     const socketServer = new Server(httpServer);
 
     /** Levanta el evento de nueva conexion */
     socketServer.on('connection', async (clientSocket) => {
-        console.log('Cliente Conectado')
+        logger.info('Cliente Conectado');
         // Emite lista de productos actualizada
         clientSocket.on('listProducts', data => {
-            console.log("pase por el listProducts")
             socketServer.emit('updateProducts', data);
         });
 
         clientSocket.on('message', async (data) => {
-
-            /** por mongoose */
             try{
                 const newMessage = data;
                 const generatedMessage = new messagesModel(newMessage);
                 await generatedMessage.save();
             }catch(error){
-                console.log("error: " + error);
+                logger.error(error);
             }
             const messages = await messagesModel.find()//.lean().exec();
             socketServer.emit('logs', messages);
@@ -98,10 +95,8 @@ try{
 
     });
 
-    
-
 }catch(error){
-    console.log(error.message);
+    logger.error(error.message);
     // si no me conecto a la base de datos termino el proceso
     process.exit(-1);
 }

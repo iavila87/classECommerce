@@ -8,6 +8,7 @@ import { TicketsService } from '../repositories/index.js'
 import CustomError from '../services/errors/customErrors.js'
 import EErros from '../services/errors/enums.js'
 import { generateErrorInfo } from '../services/errors/info.js'
+import logger from '../logger.js'
 
 
 export const createCartController = async (req, res) => {
@@ -44,10 +45,10 @@ export const addProductToCartController = async (req, res) => {
         //const cart = await cartsModel.findOne({_id:cid}).lean().exec();
         const product = await ProductsService.getById(pid);
         //const product = await productsModel.find({_id:pid});
-        console.log("cart " + JSON.stringify(cart))
+        logger.debug("cart " + JSON.stringify(cart));
 
         const addProduct = cart.products.find(item => item.product == pid);
-        console.log("addProduct " + JSON.stringify(addProduct));
+
         if(!addProduct){
                 cart.products.push({ product: pid, quantity: 1 });
         }else{
@@ -63,7 +64,7 @@ export const addProductToCartController = async (req, res) => {
 
         res.status(201).send( { status: "success", payload: cart } );
     }catch(error){
-        console.log('error: '+error);
+        logger.error(error);
         res.status(500).send( { status: "error", error: error.message } );
     }
 }
@@ -81,7 +82,7 @@ export const getCartByIdController = async (req, res) =>{
         }*/
         res.status(200).send( { status: "success", payload: cart.products } );
     }catch(error){
-        console.log("error: "+error)
+        logger.error(error);
         return res.status(500).send( { status: "error", error: error.message } );
 
     }
@@ -200,11 +201,10 @@ export const updateProductInCartController = async (req, res) =>{
         if( quantity === 0 ){
             res.status(400).send({ status: "error", error: "el campo quantity no puede ser 0" }); 
         }
-        console.log("cart: "+JSON.stringify(cart) );
+        
         cart.products.forEach(pitem =>{
             if(pitem.product == pid){
                 pitem.quantity = quantity;
-                console.log("entre al product == pid");
             }
         });
         

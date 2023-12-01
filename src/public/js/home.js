@@ -1,5 +1,4 @@
 addProductToCart = (pid, cid) => {
-    console.log('cid: '+ cid)
     /*fetch('/api/carts', {
         method: 'get',
         headers: {
@@ -8,10 +7,9 @@ addProductToCart = (pid, cid) => {
     })
     .then(result => result.json())
     .then(result => {
-        //console.log("llego el cart "+ JSON.stringify(result));
+       
         if(result.status === 'error') throw new Error(result.error);
 
-        //console.log('result.payload._id: ' + result.payload._id)
         return result.payload._id;
     })
     .then(cid => {
@@ -24,7 +22,7 @@ addProductToCart = (pid, cid) => {
     })
     .then(result => result.json())
     .then(result => {
-        console.log("aca tengo cid?");
+        
         if(result.status === 'error') throw new Error(result.error);
 
         const Toast = Swal.mixin({

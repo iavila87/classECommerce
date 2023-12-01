@@ -122,7 +122,6 @@ export const cartViewController = async (req, res) => {
     const cid = req.params.cid;
     const cart = await cartsModel.findOne({_id:cid}).populate('products.product').lean().exec();
     //const emptyProducts = typeof products == 'string' || products.length == 0;
-    console.log(JSON.stringify(cart))
     res.render('carts', { // como segundo argumento le paso argumentos como objetos
         //emptyProducts,
         cart

@@ -1,5 +1,5 @@
 import fs from 'fs'
-
+import logger from '../logger.js'
 /**
  * Product : 
  * {
@@ -130,9 +130,9 @@ class ProductManager {
 // Pruebas Realizadas
 const pruebas = async ()=>{
     const pm = new ProductManager('./products.json');
-    console.log("Comenzando Test");
-    console.log("getProducts:");
-    console.log(await pm.getProducts());
+    logger.info("Comenzando Test");
+    logger.info("getProducts:");
+    logger.info(await pm.getProducts());
     const prod = { title: "producto prueba",
                 description: "Este es un producto prueba",
                 price: 200,
@@ -147,24 +147,24 @@ const pruebas = async ()=>{
                     code: "abc124",
                     stock: 25
                 };
-    console.log("addProduct:1");
-    console.log(await pm.addProduct(prod));
-    console.log("addProduct:2");
-    console.log(await pm.addProduct(prod1));
-    console.log("getProducts:");
-    console.log(await pm.getProducts());
-    console.log("getProductById(1):");
-    console.log(await pm.getProductById(1));
-    console.log("getProductById(2):");
-    console.log(await pm.getProductById(2));
-    console.log("updateProduct(1):");
-    console.log(await pm.updateProduct(2,{price:250}));
-    console.log("getProductById(1):");
-    console.log(await pm.getProductById(1));
-    console.log("deleteProduct(1):");
-    console.log(await pm.deleteProduct(1));
-    console.log("deleteProduct(1):");
-    console.log(await pm.deleteProduct(1));
+                logger.info("addProduct:1");
+                logger.info(await pm.addProduct(prod));
+                logger.info("addProduct:2");
+                logger.info(await pm.addProduct(prod1));
+                logger.info("getProducts:");
+                logger.info(await pm.getProducts());
+                logger.info("getProductById(1):");
+                logger.info(await pm.getProductById(1));
+                logger.info("getProductById(2):");
+                logger.info(await pm.getProductById(2));
+                logger.info("updateProduct(1):");
+                logger.info(await pm.updateProduct(2,{price:250}));
+                logger.info("getProductById(1):");
+                logger.info(await pm.getProductById(1));
+                logger.info("deleteProduct(1):");
+                logger.info(await pm.deleteProduct(1));
+                logger.info("deleteProduct(1):");
+                logger.info(await pm.deleteProduct(1));
 }
 
 export default ProductManager

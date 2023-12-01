@@ -1,5 +1,7 @@
 import fs from 'fs'
 import ProductManager from './ProductManager.js';
+import logger from '../logger.js'
+
 /**
  * Cart : 
  * {
@@ -107,12 +109,12 @@ class CartManager {
 
 const test = async () => {
     const cm = new CartManager('./data/carts.json');
-    console.log("create cart 1");
-    console.log(await cm.createCart());
-    console.log("get cart by Id");
-    console.log(await cm.getCartById(3));
-    console.log("add product 1");
-    console.log(await cm.addProductCartById(2,9));
+    logger.info("create cart 1");
+    logger.info(await cm.createCart());
+    logger.info("get cart by Id");
+    logger.info(await cm.getCartById(3));
+    logger.info("add product 1");
+    logger.info(await cm.addProductCartById(2,9));
 }
 
 //test();

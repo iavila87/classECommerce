@@ -5,7 +5,7 @@ import GitHubStrategy from 'passport-github2'
 import usersModel from "../dao/models/users.model.js";
 import { JWT_PRIVATE_KEY, createHash, extractCookie, generateToken, isValidPassword } from "../utils.js";
 import cartsModel from "../dao/models/carts.model.js";
-
+import logger from '../logger.js'
 const localStrategy = local.Strategy;
 const JWTStrategy = passport_jwt.Strategy;
 
@@ -20,9 +20,8 @@ const initializePassport = () => {
         // logica
         const { first_name, last_name, email, age } = req.body;
         try{
-            console.log("passport");
             const user = await UsersService.get(username);
-            console.log("passport user: " + JSON.stringify( user ));
+            logger.debug("passport user: " + JSON.stringify( user ));
             if(user){ // verifica si existe el usuario
                 return done(null, false); // null se usa para indicar errores y false por ya existe el usuario
             }
@@ -52,9 +51,8 @@ const initializePassport = () => {
         usernameField: 'email'
     }, async (username, password, done) => {
         try{
-            console.log("username: "+ username + " pass " + password)
             const user = await UsersService.get(username); //await usersModel.findOne({email: username});
-            console.log("user login " +JSON.stringify(user));
+
             if(!user){
                 return done(null,false);
             }
@@ -70,7 +68,7 @@ const initializePassport = () => {
             return done(null, user);
 
         }catch(error){
-
+            logger.error(error);
         }
     }));
 

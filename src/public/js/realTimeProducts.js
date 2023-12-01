@@ -32,7 +32,6 @@ btnCreate.addEventListener('click', () => {
     .then( result => result.json())
     .then( result => {
         if(result.status === 'error') throw new Error(result.error);
-        console.log("result: " + result.payload)
         clientSocket.emit('listProducts', result.payload);
         const Toast = Swal.mixin({
             toast: true,
@@ -125,8 +124,7 @@ deleteProduct = (id) => {
 }
 
 clientSocket.on('updateProducts', (data)=>{
-    console.log("data::::");
-    console.log(data);
+    
     let tablaProductos = document.getElementById('tablaProductos');
     let tablaHtml =`<tr class="fw-bold">
                         <td></td>
@@ -189,7 +187,7 @@ Swal.fire({
         return !value.trim() && 'Ingrese un valor correcto';
     }
 }).then( result => {
-    console.log("salio todo bien");
+
 });
 
 // ejemplo 2
