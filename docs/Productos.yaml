@@ -1,0 +1,177 @@
+paths:
+  api/products:
+    get:
+      summary: Obtiene todos los productos
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: "Los productos fueron obtenidos de la DB correctamente"
+        "500":
+          description: "Error en la lectura de los productos"
+    
+    post:
+      summary: Crea el producto en la DB segun los datos recibidos en el body
+      tags: 
+        - Products
+      responses:
+        "201":
+          description: "Producto creado en la DB correctamente"
+        "404":
+          description: "No se creo el producto"
+  
+  api/products/:id:
+    get:
+      summary: Obtiene el producto de la DB segun el ID recibido
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: "Producto obtenido de la DB correctamente"
+        "404":
+          description: "No se encontro el producto"
+    put:
+      summary: Actualiza el producto en la DB segun el ID recibido
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: "Producto actualizado en la DB correctamente"
+        "404":
+          description: "No se actualizo el producto"
+    delete:
+      summary: Elimina el producto en la DB segun el ID recibido
+      tags: 
+        - Products
+      responses:
+        "200":
+          description: "Producto eliminado en la DB correctamente"
+        "404":
+          description: "No se elimino el producto"
+
+  api/carts:
+    post:
+      summary: Crea el carrito de la DB
+      tags: 
+        - Carts
+      responses:
+        "201":
+          description: "Carrito creado correctamente"
+        "500":
+          description: "No se pudo crear el carrito"
+    
+  api/carts/:id:
+    get:
+      summary: Obtiene el carrito de la DB segun el ID recibido
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: "Carrito obtenido de la DB correctamente"
+        "500":
+          description: "No se encontro el carrito"
+    put:
+      summary: Actualiza el carrito en la DB segun el ID recibido
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: "Carrito actualizado en la DB correctamente"
+        "400":
+          description: "No se actualizo el carrito por error en algun campo"
+        "404":
+          description: "No se encontro el carrito"
+        "500":
+          description: "No se actualizo el carrito"
+    delete:
+      summary: Elimina el producto en la DB segun el ID recibido
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: "Producto eliminado en la DB correctamente"
+        "404":
+          description: "No se elimino el producto"
+
+  api/carts/:cid/product/:pid:
+    post:
+      summary: Agrega un producto al carrito de la DB segun los ID recibidos
+      tags: 
+        - Carts
+      responses:
+        "201":
+          description: "Producto agregado al carrito de la DB correctamente"
+        "500":
+          description: "No se encontro el carrito o el producto"
+    put:
+      summary: Actualiza un producto del carrito en la DB segun el ID recibido
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: "Producto del carrito actualizado en la DB correctamente"
+        "400":
+          description: "No se actualizo el carrito por error en algun campo"
+        "404":
+          description: "No se encontro el carrito o el producto"
+        "500":
+          description: "No se actualizo el carrito"
+    delete:
+      summary: Elimina el producto del carrito la DB segun el ID recibido
+      tags: 
+        - Carts
+      responses:
+        "200":
+          description: "Producto eliminado en la DB correctamente"
+        "404":
+          description: "No se encontro el carrito o el producto"
+        "500":
+          description: "No se elimino el carrito"
+
+  api/carts/:cid/purchase:
+    get:
+      summary: Obtiene el ticket del carrito en la DB segun el ID recibido
+      tags: 
+        - Carts
+      responses:
+        "201":
+          description: "ticket generado en la DB correctamente"
+        "400":
+          description: "No se encontro el producto"
+        "404":
+          description: "No se encontro el carrito"
+        "500":
+          description: "No se genero el ticket"
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado por MongoDB
+        title:
+          type: String
+          description: Titulo del producto
+        description:
+          type: String
+          description: Descripcion del producto
+        code:
+          type: String
+          description: Codigo del producto
+        price:
+          type: Number
+          description: Precio del producto
+        status:
+          type: Boolean
+          description: Estado del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        category:
+          type: String
+          description: Categoria del producto
+        thumbails:
+          type: Array
+          description: Imagenes del producto

@@ -109,7 +109,7 @@ export const deleteCartController = async (req, res) =>{
         const deleteProduct = cart.products.find(item => item.product == pid);
             
         if(!deleteProduct){
-            res.status(400).send({ status: "error", error: "El producto no se encontro en el carrito" });
+            res.status(404).send({ status: "error", error: "El producto no se encontro en el carrito" });
         }else{
             cart.products = cart.products.filter(item => item.product.toString() !== pid);
         }

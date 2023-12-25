@@ -19,6 +19,24 @@ import MongoClient from './dao/MongoClient.js'
 import logger from './logger.js'
 //import ProductManager from './dao/ProductManager.js'
 
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
+
+
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.1",
+        info: {
+            title: 'Documentacion para el cliente',
+            description: 'Descripcion del proyecto'
+        }
+    },
+    apis: ['./docs/**/*.yaml']
+}
+
+const specs = swaggerJSDoc(swaggerOptions);
+
+
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
 const PORT = config.apiserver.port;
@@ -36,6 +54,8 @@ app.engine('handlebars', handlebars.engine());  // instancia handlebars
 app.set('views', './src/views');                // indica donde se encontraran las vistas 
 app.set('view engine', 'handlebars');           // confirma que el motor de plantillas es handlebars
 /** */
+
+app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 app.use( session({
     

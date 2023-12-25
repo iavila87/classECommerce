@@ -8,6 +8,8 @@ import  {   getAllProductsController,
 
 import { handlePolicies } from "../utils.js";
 
+
+
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
 const router = Router();
