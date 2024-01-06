@@ -14,7 +14,7 @@ import { handlePolicies } from "../utils.js";
 //const pm = new ProductManager('./data/products.json');
 const router = Router();
 /** get 'api/products' y 'api/products?limit='*/
-router.get('/', handlePolicies(['USER', 'ADMIN']), getAllProductsController);
+router.get('/', /*handlePolicies(['USER', 'ADMIN']),*/ getAllProductsController);
 /** get 'api/products/:pid' */
 router.get('/:pid', handlePolicies(['USER', 'ADMIN']), getProductByIdController);
 /** Metodo POST */

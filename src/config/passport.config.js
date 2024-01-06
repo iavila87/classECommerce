@@ -19,6 +19,7 @@ const initializePassport = () => {
     }, async(req, username, password, done) => {
         // logica
         const { first_name, last_name, email, age } = req.body;
+        logger.debug("passport req.body: " + JSON.stringify( req.body ));
         try{
             const user = await UsersService.get(username);
             logger.debug("passport user: " + JSON.stringify( user ));
@@ -37,11 +38,15 @@ const initializePassport = () => {
                 cart: cartForNewUser._id,
                 role: (email === 'adminCoder@coder.com') ? 'admin' : 'user'
             }
+            logger.debug("passport newUser1: " + JSON.stringify( newUser ));
 
             const result = await UsersService.create(newUser);
+            logger.debug("passport newUser2: " + JSON.stringify( newUser ));
             return done(null, result);
 
         }catch(error){
+            logger.debug("passport error: " + error);
+
             return done( {status: 'error', error: error.message} );
         }
     }));
