@@ -45,6 +45,13 @@ export const addProductToCartController = async (req, res) => {
         //const cart = await cartsModel.findOne({_id:cid}).lean().exec();
         const product = await ProductsService.getById(pid);
         //const product = await productsModel.find({_id:pid});
+        // ver si no existe el producto
+
+        // comparo que el usuario no compre su propio producto
+        if(product.owner === req.session.user.email){
+            return res.status(400).send( { status: "error", error: 'you cannot buy your own products' } );
+        } 
+
         logger.debug("cart " + JSON.stringify(cart));
 
         const addProduct = cart.products.find(item => item.product == pid);

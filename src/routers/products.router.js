@@ -14,14 +14,14 @@ import { handlePolicies } from "../utils.js";
 //const pm = new ProductManager('./data/products.json');
 const router = Router();
 /** get 'api/products' y 'api/products?limit='*/
-router.get('/', /*handlePolicies(['USER', 'ADMIN']),*/ getAllProductsController);
+router.get('/', handlePolicies(['USER', 'ADMIN']), getAllProductsController);
 /** get 'api/products/:pid' */
 router.get('/:pid', handlePolicies(['USER', 'ADMIN']), getProductByIdController);
 /** Metodo POST */
-router.post('/', handlePolicies(['ADMIN']),createProductController);
+router.post('/', handlePolicies(['PREMIUM', 'ADMIN']),createProductController);
 /** Metodo PUT */
-router.put('/:pid', handlePolicies(['ADMIN']), updateProductController);
+router.put('/:pid', handlePolicies(['PREMIUM', 'ADMIN']), updateProductController);
 /** Metodo DELETE */
-router.delete('/:pid', handlePolicies(['ADMIN']), deleteProductController);
+router.delete('/:pid', handlePolicies(['PREMIUM', 'ADMIN']), deleteProductController);
 
 export default router;

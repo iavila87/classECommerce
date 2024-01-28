@@ -78,7 +78,7 @@ export const createProductController = async (req, res) => {
     try{
         const newProduct = req.body;
         newProduct.status = true;
-
+        newProduct.owner = req.session.user.email;
         const generatedProduct = await ProductsService.create(newProduct);
         
         // res.redirect('/'); redirecciona a la vista raiz
@@ -110,7 +110,15 @@ export const deleteProductController = async (req, res) =>{
     const id = req.params.pid;
 
     try{
-        // aca va service
+        // comparo que el usuario tenga rol premium para eliminar un producto
+        if(req.session.user.role === 'premium'){
+            const product = await ProductsService.getById(id);
+            // si el usuario no es quien lo creo no esta autorizado
+            if(product.owner !== req.session.email){
+                return res.status(403).send( { status: "error", error: 'Not authorized' } );
+            }
+        } 
+        
         await ProductsService.delete(id);
         const products = await ProductsService.getAll();
         //productsService.deleteProduct( id );

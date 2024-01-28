@@ -15,10 +15,10 @@ const productsSchema = new mongoose.Schema({
 	status: Boolean,
 	stock: Number,
 	category: String,
-	thumbnails: Array,
+	thumbnails: Array, // ver [string]
 	owner: {
 			type: String,
-			//required: true,
+			required: true,
 			default: 'admin',
 			ref: "users"
 		   }

@@ -30,6 +30,7 @@ const usersSchema = new mongoose.Schema({
     },
     role: {
         type: String,
+        enum: ['user','admin','premium'], // solo acepta estos campos
         default: 'user'
     }
 });
