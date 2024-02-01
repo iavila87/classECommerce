@@ -13,5 +13,9 @@ export default {
     mongo: {
         uri: process.env.MONGO_URI,
         dbname: process.env.MONGO_DB_NAME
+    },
+    nodemailer: {
+        user: process.env.NODEMAILER_USER,
+        pass: process.env.NODEMAILER_PASS
     }
 }
