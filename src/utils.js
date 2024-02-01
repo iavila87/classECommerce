@@ -49,3 +49,13 @@ export const handlePolicies = policies => (req, res, next) => {
 
     return next();
 }
+
+// generador de string random de longitud 'num'
+export const generateRandomString = (num) => {
+    return [...Array(num)].map(() => {
+        const randomNum = ~~(Math.random() * 36);
+        return randomNum.toString(36);
+    })
+        .join('')
+        .toUpperCase();
+}

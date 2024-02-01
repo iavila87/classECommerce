@@ -6,6 +6,8 @@ import CartsRepository from './carts.repository.js'
 import TicketsRepository from './tickets.repository.js'
 import UsersFactory from "../dao/users.PersistenceFactory.js";
 import UsersRepository from './users.repository.js'
+import UserPasswordFactory from "../dao/user.password.PersistenceFactory.js";
+import UserPasswordRepository from './user.password.repository.js'
 
 
 export const ProductsService = new ProductsRepository(await ProductsFactory.getPersistence());
@@ -15,3 +17,5 @@ export const CartsService = new CartsRepository(await CartsFactory.getPersistenc
 export const TicketsService = new TicketsRepository(await TicketsFactory.getPersistence());
 
 export const UsersService = new UsersRepository(await UsersFactory.getPersistence());
+
+export const UserPasswordService = new UserPasswordRepository(await UserPasswordFactory.getPersistence());

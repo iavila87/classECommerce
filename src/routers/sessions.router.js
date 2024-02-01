@@ -6,7 +6,8 @@ import {
             failLoginSessionController,
             logoutSessiontroller,
             currentSessionController,
-            githubSessionController
+            githubSessionController,
+            forgetPasswordSessionController
 } from "../controllers/sessions.controller.js"
 
 import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
@@ -33,6 +34,11 @@ router.get('/current', currentSessionController);
 router.get('/github', passport.authenticate('github',{scope:['user:email']}), (req,res) => {});
 
 router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), githubSessionController)
+
+
+
+router.post('/forget-password', forgetPasswordSessionController)
+
 
 
 export default router

@@ -1,4 +1,7 @@
 import UsersDTO from "../dto/users.dto.js";
+import { UsersService, UserPasswordService } from '../repositories/index.js'
+import { generateRandomString } from '../utils.js';
+
 import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
 import logger from '../logger.js'
 
@@ -35,7 +38,42 @@ export const currentSessionController = async (req, res) => {
     
 }
 
-export const githubSessionController = async (req, res)=>{
+export const githubSessionController = async (req, res)=> {
     req.session.user = req.user;
     res.redirect('/products');
+}
+
+// cambio de contraseña
+export const forgetPasswordSessionController = async (req, res) => {
+    const email = req.body.email;
+    const user = await UsersService.get(email);
+    if (!user) {
+        return res.status(404).send({ status: 'error', error: 'User not found' })
+    }
+    const token = generateRandomString(16); // genero un string de longitud 16
+    
+    // creo en la base de datos el usuario y token para la recuperacion del password
+    await UserPasswordService.save({ email, token })
+    
+    
+    
+    
+    
+    const mailerConfig = {
+        service: 'gmail',
+        auth: { user: config.nodemailer.user, pass: config.nodemailer.pass }
+    }
+    let transporter = nodemailer.createTransport(mailerConfig)
+    let message = {
+        from: config.nodemailer.user,
+        to: email,
+        subject: '[Coder e-comm API] Reset your password',
+        html: `<h1>[Coder e-comm API] Reset your password</h1><hr />You have asked to reset your password. You can do it here: <a href="http://${req.hostname}:${PORT}/reset-password/${token}">http://${req.hostname}:${PORT}/reset-password/${token}</a><hr />Best regards,<br><strong>The Coder e-comm API team</strong>`
+    }
+    try {
+        await transporter.sendMail(message)
+        res.json({ status: 'success', message: `Email successfully sent to ${email} in order to reset password` })
+    } catch (err) {
+        res.status(500).json({ status: 'error', error: err.message })
+    }
 }
