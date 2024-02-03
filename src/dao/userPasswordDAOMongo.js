@@ -16,15 +16,21 @@ export default class UserPasswordDAOMongo {
         const result = await this.model.findOne({_id:id});
         return result;
     }
-
-    get = async (email) => {
-        const result = await this.model.findOne({ email: email });
+    */
+    getByToken = async (token) => {
+        const result = await this.model.findOne({ token: token });
         return result;
     }
-*/
+
     save = async (userToken) => {
         const result = await this.model.create(userToken);
         return result;
+    }
+
+    delete = async(email) =>{
+
+        await this.model.deleteOne({ email: email });
+
     }
 
 }

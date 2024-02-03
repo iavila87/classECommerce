@@ -6,10 +6,14 @@ export default class UserPasswordRepository{
     getById = async(id) => {
         return await this.dao.getById(id)
     }
+*/
+    getByToken = async(token) => {
+        return await this.dao.getByToken(token);
+    }
 
-    get = async(email) => {
-        return await this.dao.get(email)
-    }*/
+    save = async(data) => await this.dao.save(data);
 
-    save = async(data) => await this.dao.save(data)
+    delete = async(email) => {
+        await this.dao.delete(email);
+    }
 }

@@ -62,7 +62,11 @@ export const forgetPasswordSessionController = async (req, res) => {
     // configuro mailer para el envio
     const mailerConfig = {
         service: 'gmail',
-        auth: { user: config.nodemailer.user, pass: config.nodemailer.pass }
+        auth: { user: config.nodemailer.user, pass: config.nodemailer.pass },
+        tls: {
+            rejectUnauthorized: false
+        }
+        
     }
 
     // transporter
@@ -86,5 +90,38 @@ export const forgetPasswordSessionController = async (req, res) => {
         res.status(200).send({ status: 'success', message: `Email successfully sent to ${email} in order to reset password` })
     } catch (error) {
         res.status(500).send({ status: 'error', error: error.message })
+    }
+}
+
+// verifica token para cambio de contraseña
+export const verifyTokenSessionController = async (req, res) => {
+    const token = req.params.token
+    // consalta a db para verificar el token
+    const userPassword = await UserPasswordService.getByToken(token);
+    if (!userPassword) {
+        return res.status(404).send({ status: 'error', error: 'Token no válido / El token ha expirado' })
+    }
+    const user = userPassword.email
+    res.render('reset-password', { user })
+}
+
+
+
+
+
+
+
+
+
+export const resetPasswordSessionController = async (req, res) => {
+    try {
+        const user = await UsersService.get(req.params.user);
+        
+        await UsersService.update(user, req.body.newPassword);
+
+        res.status(200).send({ status: 'success', message: 'Se ha creado una nueva contraseña' })
+        await UserPasswordService.delete(req.params.user);
+    } catch(err) {
+        res.status(500).send({ status: 'error', error: err.message })
     }
 }

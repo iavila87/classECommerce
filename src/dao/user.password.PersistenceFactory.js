@@ -15,7 +15,7 @@ export default class PersistenceFactory {
             case 'MONGO':
                 let { default: UserPasswordDAOMongo } = await import('./userPasswordDAOMongo.js');
                 return new UserPasswordDAOMongo;
-                break;
+                
             default:
                 break;
         }

@@ -30,4 +30,12 @@ router.get('/products', passportCall('jwt'), handlePolicies(['USER', 'ADMIN']), 
 // carts
 router.get('/carts/:cid', handlePolicies(['USER', 'ADMIN']), cartViewController);
 
+router.get('/forget-password', (req, res) => {
+    res.render('forget-password');
+})
+
+router.get('/reset-password/:token', (req, res) => {
+    res.redirect(`/api/sessions/verify-token/${req.params.token}`)
+})
+
 export default router

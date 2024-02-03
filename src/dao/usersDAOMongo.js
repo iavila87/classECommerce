@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import usersModel from "./models/users.model.js";
+import { JWT_PRIVATE_KEY, createHash, extractCookie, generateToken, isValidPassword } from "../utils.js";
 
 export default class UsersDAOMongo {
 
@@ -24,6 +25,11 @@ export default class UsersDAOMongo {
 
     save = async (user) => {
         const result = await this.model.create(user);
+        return result;
+    }
+
+    update = async (user, password) => {
+        const result = await this.model.findByIdAndUpdate(user._id, { password: createHash(password) });
         return result;
     }
 
