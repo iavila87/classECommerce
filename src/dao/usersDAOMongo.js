@@ -33,4 +33,9 @@ export default class UsersDAOMongo {
         return result;
     }
 
+    delete = async (id) => {
+        const result = await this.model.deleteOne({_id:id});
+        return result;
+    }
+
 }
