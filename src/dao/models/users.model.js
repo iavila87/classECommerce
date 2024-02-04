@@ -32,6 +32,17 @@ const usersSchema = new mongoose.Schema({
         type: String,
         enum: ['user','admin','premium'], // solo acepta estos campos
         default: 'user'
+    },
+    documents: {
+        type: [
+            {
+                name: {type: String},
+                reference: {type: String}
+            }
+        ]
+    },
+    last_connection: {
+        type: String
     }
 });
 

@@ -11,6 +11,7 @@ import viewRouter from './routers/views.router.js'
 import productRouter from './routers/products.router.js'
 import cartRouter from './routers/carts.router.js'
 import sessionRouter from './routers/sessions.router.js'
+import userRouter from './routers/users.router.js'
 import messagesModel from './dao/models/messages.model.js'
 import loggerTestRouter from './routers/loggerTest.router.js'
 import { passportCall } from './utils.js'
@@ -78,6 +79,7 @@ app.use('/', viewRouter);
 app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/api/sessions', sessionRouter);
+app.use('/api/users', userRouter);
 app.use('/loggerTest', loggerTestRouter);
 
 

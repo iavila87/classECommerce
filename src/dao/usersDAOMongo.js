@@ -9,7 +9,7 @@ export default class UsersDAOMongo {
     }
 
     getAll = async () => {
-        results = await this.model.find();
+        const results = await this.model.find();
         return results;
     }
     

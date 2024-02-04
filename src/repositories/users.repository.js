@@ -7,6 +7,10 @@ export default class UsersRepository{
         return await this.dao.getById(id);
     }
 
+    getAll = async() => {
+        return await this.dao.getAll();
+    }
+
     get = async(email) => {
         return await this.dao.get(email);
     }
