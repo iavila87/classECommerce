@@ -127,3 +127,7 @@ export const cartViewController = async (req, res) => {
         cart
     });     // renderiza el home.handlebars en main.handlebars
 }
+
+export const paySessionController = async (req, res) => {
+    res.render('checkout',{});
+}

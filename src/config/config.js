@@ -17,5 +17,8 @@ export default {
     nodemailer: {
         user: process.env.NODEMAILER_USER,
         pass: process.env.NODEMAILER_PASS
+    },
+    stripe: {
+        secret: process.env.STRIPE_SK
     }
 }

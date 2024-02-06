@@ -42,6 +42,7 @@ export const currentSessionController = async (req, res) => {
     
 }
 
+
 export const githubSessionController = async (req, res)=> {
     req.session.user = req.user;
     res.redirect('/products');
