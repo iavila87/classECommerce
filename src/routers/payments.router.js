@@ -3,7 +3,7 @@ import { createSessionController } from "../controllers/payments.controller.js";
 
 const router = Router();
 
-router.post('/create-checkout-session', createSessionController);
+router.post('/create-checkout-session/:cid', createSessionController);
 
 router.get('/success', (req, res) => { return res.send('success') });
 
