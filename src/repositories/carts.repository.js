@@ -4,6 +4,7 @@ export default class CartsRepository{
     }
 
     getById = async(id) => await this.dao.getById(id)
+    getByIdView = async(id) => await this.dao.getByIdView(id)
     create = async() => await this.dao.save()
     addProduct = async(id,data) => await this.dao.addProductToCart(id,data)
     update = async(id, data) => await this.dao.update(id, data)

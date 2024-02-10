@@ -31,7 +31,7 @@ router.get('/products', passportCall('jwt'), handlePolicies(['USER', 'ADMIN']), 
 // carts
 router.get('/carts/:cid', handlePolicies(['USER', 'ADMIN']), cartViewController);
 
-router.get('/checkout', paySessionController);
+router.get('/checkout', passportCall('jwt'), paySessionController);
 
 
 router.get('/forget-password', (req, res) => {

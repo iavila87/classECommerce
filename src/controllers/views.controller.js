@@ -2,6 +2,10 @@ import productsModel from "../dao/models/products.model.js"
 import cartsModel from "../dao/models/carts.model.js";
 import { ProductsService } from '../repositories/index.js'
 import { generateProducts } from "../utils.js";
+import { UsersService, CartsService } from "../repositories/index.js";
+
+
+
 export const loginViewController = async (req, res) => {
     res.render('login', { // como segundo argumento le paso argumentos como objetos
     });
@@ -129,5 +133,13 @@ export const cartViewController = async (req, res) => {
 }
 
 export const paySessionController = async (req, res) => {
-    res.render('checkout',{});
+    //const user = req.session.user
+    const user = req.user.user
+    console.log('_id: '+ JSON.stringify(user._id))
+    const user1 = await UsersService.getById(user._id);
+    const cart = await CartsService.getByIdView(user1.cart)
+    const cart1 = user1.cart;
+    console.log('cart ' + JSON.stringify(cart));
+    console.log('user1 ' + JSON.stringify(user1));
+    res.render('checkout',{user1, cart});
 }

@@ -20,7 +20,9 @@ addProductToCart = (pid, cid) => {
             'Content-Type': 'application/json'
         }
     })
-    .then(result => result.json())
+    .then(result => {
+        console.log('result: '+JSON.stringify(result))
+        return result.json()})
     .then(result => {
         
         if(result.status === 'error') throw new Error(result.error);

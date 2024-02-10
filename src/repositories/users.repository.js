@@ -7,6 +7,10 @@ export default class UsersRepository{
         return await this.dao.getById(id);
     }
 
+    getByIdView = async(id) => {
+        return await this.dao.getByIdView(id);
+    }
+
     getAll = async() => {
         return await this.dao.getAll();
     }

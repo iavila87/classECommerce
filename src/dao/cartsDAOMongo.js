@@ -12,6 +12,11 @@ export default class ProductsDAOMongo {
         return result;
     }
 
+    getByIdView = async (id) =>{
+        let result = await this.model.findOne({_id:id}).populate('products.product').lean().exec();
+        return result
+    }
+
     save = async () => {
         let result = await this.model.create({ products: [] });
         return result;

@@ -18,6 +18,11 @@ export default class UsersDAOMongo {
         return result;
     }
 
+    getByIdView = async (id) => {
+        const result = await this.model.findOne({_id:id}).populate('cart').lean().exec();
+        return result;
+    }
+
     get = async (email) => {
         const result = await this.model.findOne({ email: email });
         return result;
