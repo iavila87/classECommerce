@@ -42,7 +42,8 @@ const usersSchema = new mongoose.Schema({
         ]
     },
     last_connection: {
-        type: String
+        type: Date,
+        default: Date.now
     }
 });
 

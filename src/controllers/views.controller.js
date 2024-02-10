@@ -3,7 +3,7 @@ import cartsModel from "../dao/models/carts.model.js";
 import { ProductsService } from '../repositories/index.js'
 import { generateProducts } from "../utils.js";
 import { UsersService, CartsService } from "../repositories/index.js";
-
+import UsersDTO from "../dto/users.dto.js"
 
 
 export const loginViewController = async (req, res) => {
@@ -142,4 +142,13 @@ export const paySessionController = async (req, res) => {
     console.log('cart ' + JSON.stringify(cart));
     console.log('user1 ' + JSON.stringify(user1));
     res.render('checkout',{user1, cart});
+}
+
+export const userPanelController = async (req, res) => {
+    const users = await UsersService.getAll();
+    let allUsersDTO = [];
+    for (let index = 0; index < users.length; index++) {
+        allUsersDTO.push(new UsersDTO(users[index]));
+    }
+    res.render('usersPanel',{allUsersDTO})
 }

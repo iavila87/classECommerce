@@ -7,7 +7,8 @@ import {
             productsViewController,
             cartViewController,
             mockingProductsViewController,
-            paySessionController
+            paySessionController,
+            userPanelController
         } from "../controllers/views.controller.js"
 import { auth } from '../middlewares/auth.middleware.js'
 import ProductManager from '../dao/ProductManager.js'
@@ -33,6 +34,7 @@ router.get('/carts/:cid', handlePolicies(['USER', 'ADMIN']), cartViewController)
 
 router.get('/checkout', passportCall('jwt'), paySessionController);
 
+router.get('/users-panel', passportCall('jwt'), userPanelController);
 
 router.get('/forget-password', (req, res) => {
     res.render('forget-password');
