@@ -1,19 +1,4 @@
 addProductToCart = (pid, cid) => {
-    /*fetch('/api/carts', {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(result => result.json())
-    .then(result => {
-       
-        if(result.status === 'error') throw new Error(result.error);
-
-        return result.payload._id;
-    })
-    .then(cid => {
-        return */
     fetch(`/api/carts/${cid}/product/${pid}`, {
         method: 'post',
         headers: {

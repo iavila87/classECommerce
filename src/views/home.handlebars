@@ -1,10 +1,25 @@
 <div class="container">
     <div class="row">
-        <div class="col-12">
+        <div class="col-4">
             <p>Usuario: {{user.first_name}} {{user.last_name}} 
                 (<a href="/profile">{{user.email}}</a>)
             </p>
             <p>Role: {{user.role}} (<a href="/api/sessions/logout">Logout</a>) </p>
+        </div>
+        <div class="col-4">
+            <h1>e-commerce</h1>
+        </div>
+        <div class="col-4">
+
+            <form action="/checkout" 
+                method="get"
+                class="d-flex flex-column mb-3 p-2 border rounded" 
+                id="formCart">
+                
+                <button type="submit" id="btnCart" class="btn btn-primary">Ir al Carrito de Compras</button> 
+                
+            </form>
+
         </div>
     </div>
     <div class="row">

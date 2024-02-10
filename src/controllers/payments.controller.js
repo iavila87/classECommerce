@@ -12,10 +12,6 @@ export const createSessionController = async (req, res) => {
     let line_items = [];
     let item;
     for(let i = 0; i< cart.products.length; i++){
-        console.log("title: "+ JSON.stringify(cart.products[i].product.title));
-        console.log("description: "+ JSON.stringify(cart.products[i].product.description));
-        console.log("price: "+ JSON.stringify(cart.products[i].product.price));
-        console.log("quantity: "+ JSON.stringify(cart.products[i].quantity));
         // genero la estructura
         item = {
             price_data: {
