@@ -22,7 +22,7 @@ import { handlePolicies, passportCall, publicRoutes } from "../utils.js";
 const router = Router();
 router.get('/', handlePolicies(['PUBLIC']),loginViewController);
 router.get('/register', registerViewController);
-router.get('/realtimeproducts', handlePolicies(['USER', 'ADMIN']), realTimeProductsViewController);
+router.get('/realtimeproducts', handlePolicies(['USER', 'PREMIUM', 'ADMIN']), realTimeProductsViewController);
 // mock
 router.get('/mockingproducts', mockingProductsViewController);
 // chat
