@@ -1,13 +1,16 @@
 import { Router } from "express";
-import { createSessionController } from "../controllers/payments.controller.js";
+import {    createSessionController,
+            paySuccessController,
+            payCancelController } from "../controllers/payments.controller.js";
+import { handlePolicies, passportCall } from "../utils.js";
 
 const router = Router();
 
 router.post('/create-checkout-session/:cid', createSessionController);
 
-router.get('/success', (req, res) => { return res.send('success') });
+router.get('/success', passportCall('jwt'), paySuccessController); 
 
-router.get('/cancel', (req, res) => { return res.send('cancel') });
+router.get('/cancel', payCancelController);
 
 
 export default router;

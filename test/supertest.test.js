@@ -19,7 +19,6 @@ describe('Testing Proyecto', ()=>{
             const {status,ok,_body} = response;
             expect(status).to.be.equal(302);
             //expect(_body).to.have.property('_id');
-            //console.log(status);
         });
 
         it('El endpoint POST api/sessions/register no debe registar un usuario', async ()=>{
@@ -29,7 +28,6 @@ describe('Testing Proyecto', ()=>{
             const {status,ok,_body} = response;
             expect(ok).to.be.equal(false);
             //expect(_body).to.have.property('_id');
-            //console.log(status);
         });
 
     } );
@@ -43,7 +41,6 @@ describe('Testing Proyecto', ()=>{
             expect(_body.payload).to.be.ok
             //expect(status).to.be.equal(200);
             //expect(_body).to.have.property('_id');
-            //console.log(status);
         });
 
         it('El endpoint POST api/products/ no debe agregar un producto', async ()=>{
@@ -53,7 +50,6 @@ describe('Testing Proyecto', ()=>{
             const {status,ok,_body} = response;
             expect(ok).to.be.equal(false);
             //expect(_body).to.have.property('_id');
-            //console.log(status);
         });
 
     } );
@@ -67,7 +63,6 @@ describe('Testing Proyecto', ()=>{
             expect(_body.payload).to.be.ok
             //expect(status).to.be.equal(200);
             //expect(_body).to.have.property('_id');
-            //console.log(status);
         });
 
     } );

@@ -14,6 +14,8 @@ import {
 
 import { JWT_COOKIE_NAME, createHash, extractCookie, isValidPassword } from "../utils.js";
 import passport from "passport";
+import { handlePolicies, passportCall } from "../utils.js";
+
 
 const router = Router();
 /** Metodo POST */
@@ -29,7 +31,7 @@ router.post('/login',
 
 router.get('/failLogin', failLoginSessionController);
 /** Metodo GET */
-router.get('/logout', logoutSessiontroller);
+router.get('/logout', passportCall('jwt'), logoutSessiontroller);
 /** Metodo GET */
 router.get('/current', currentSessionController);
 

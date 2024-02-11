@@ -39,25 +39,14 @@ export const addProductToCartController = async (req, res) => {
     
     const cid = req.params.cid;
     const pid = req.params.pid;
-    console.log('cid: '+cid)
-    console.log('cid: '+pid)
+    
     try{
         const cart = await CartsService.getById(cid);
-        console.log('cart: '+JSON.stringify(cart))
-        //const cart = await cartsModel.findOne({_id:cid}).lean().exec();
         const product = await ProductsService.getById(pid);
-        console.log('product: '+JSON.stringify(product))
-        //const product = await productsModel.find({_id:pid});
-        // ver si no existe el producto
-        console.log("VER aca aca");
         // comparo que el usuario no compre su propio producto
-        /*console.log('session:'+req.session.user.email)
-        if(product.owner === req.session.user.email){
-            console.log("entre");
+        if(product.owner === req.user.user.email){
             return res.status(400).send( { status: "error", error: 'you cannot buy your own products' } );
-        } */
-        console.log("despues");
-        logger.debug("cart " + JSON.stringify(cart));
+        }
 
         const addProduct = cart.products.find(item => item.product == pid);
 
@@ -74,7 +63,7 @@ export const addProductToCartController = async (req, res) => {
         const updateCart = await CartsService.update(cid, cart);
         //const updateCart = await cartsModel.updateOne({_id:cid}, cart);
 
-        res.status(201).send( { status: "success", payload: cart } );
+        return res.status(201).send( { status: "success", payload: cart } );
     }catch(error){
         logger.error(error);
         res.status(500).send( { status: "error", error: error.message } );

@@ -41,6 +41,8 @@ export const passportCall = strategy => {
 }
 
 export const handlePolicies = policies => (req, res, next) => {
+    if (policies.includes('PUBLIC')) return next();
+
     const user = req.user.user || null;
     if( !policies.includes(user.role.toUpperCase()) ) 
     {
@@ -48,6 +50,11 @@ export const handlePolicies = policies => (req, res, next) => {
     }
 
     return next();
+}
+
+export const publicRoutes = (req, res, next) => {
+    if (!req.session.user) return res.redirect('/')
+    next()
 }
 
 // generador de string random de longitud 'num'

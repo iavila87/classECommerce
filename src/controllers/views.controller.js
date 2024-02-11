@@ -4,11 +4,17 @@ import { ProductsService } from '../repositories/index.js'
 import { generateProducts } from "../utils.js";
 import { UsersService, CartsService } from "../repositories/index.js";
 import UsersDTO from "../dto/users.dto.js"
+import { handlePolicies, passportCall } from "../utils.js";
 
 
 export const loginViewController = async (req, res) => {
-    res.render('login', { // como segundo argumento le paso argumentos como objetos
-    });
+    
+    const user = req.user || null;
+    if(user){
+        return res.redirect('/products');
+    }
+    res.render('login', { });// como segundo argumento le paso argumentos como objetos
+    
 }
 
 export const registerViewController = async (req, res) => {
@@ -136,12 +142,9 @@ export const cartViewController = async (req, res) => {
 export const paySessionController = async (req, res) => {
     //const user = req.session.user
     const user = req.user.user
-    console.log('_id: '+ JSON.stringify(user._id))
     const user1 = await UsersService.getById(user._id);
     const cart = await CartsService.getByIdView(user1.cart)
     const cart1 = user1.cart;
-    console.log('cart ' + JSON.stringify(cart));
-    console.log('user1 ' + JSON.stringify(user1));
     res.render('checkout',{user1, cart});
 }
 

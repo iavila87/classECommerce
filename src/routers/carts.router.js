@@ -12,6 +12,7 @@ import  {   createCartController,
 import CartManager from '../dao/CartManager.js'
 import cartsModel from "../dao/models/carts.model.js"
 import productsModel from "../dao/models/products.model.js" 
+import { handlePolicies, passportCall, publicRoutes } from "../utils.js";
 
 /** Inicializacion de CartManager */
 //const cm = new CartManager('./data/carts.json');
@@ -20,7 +21,7 @@ const router = Router();
 /** post 'api/carts/' */
 router.post('/', createCartController);
 /** post 'api/carts/:cid/product/:pid' */
-router.post('/:cid/product/:pid', addProductToCartController);
+router.post('/:cid/product/:pid', passportCall('jwt'), addProductToCartController);
 /** Metodo GET*/
 /** get 'api/carts/:cid' */
 router.get('/:cid', getCartByIdController);

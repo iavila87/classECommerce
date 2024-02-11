@@ -7,7 +7,6 @@ addProductToCart = (pid, cid) => {
         }
     })
     .then(result => {
-        console.log('result: '+JSON.stringify(result))
         return result.json()})
     .then(result => {
         

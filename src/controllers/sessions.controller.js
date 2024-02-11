@@ -19,7 +19,6 @@ export const failRegisterSessionController = (req, res) => {
 }
 
 export const loginSessionController = async (req, res) => {
-    console.log('login req.user '+JSON.stringify(req.user))
     if(!req.user){
         return res.status(400).send({status: 'error', error:'invalid credentials'});
     }
@@ -34,7 +33,7 @@ export const failLoginSessionController = (req, res) => {
 }
 
 export const logoutSessiontroller = async (req, res) => {
-    req.clearCookie(JWT_COOKIE_NAME).redirect('/');
+    res.clearCookie(JWT_COOKIE_NAME).redirect('/');
 }
 
 export const currentSessionController = async (req, res) => {

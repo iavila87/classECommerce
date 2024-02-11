@@ -39,35 +39,15 @@ export const createSessionController = async (req, res) => {
     return res.send(session);
 }
 
-/*
-line_items:[
-            {
-                price_data: 
-                {
-                    product_data: 
-                    {
-                        name: 'laptop',
-                        description: 'super laptop',
+export const paySuccessController = async (req, res) => {
+    const user = req.user.user
+    const cart = await CartsService.getById(user.cart)    
+    cart.products = [];
+    const updateCart = await CartsService.update(cid, cart);
 
-                    },
-                    currency: 'usd',
-                    unit_amount: 200000 // 2000.00
-                },
-                quantity: 2
-            },
-            {
-                price_data: 
-                {
-                    product_data: 
-                    {
-                        name: 'TV',
-                        description: 'super TV',
+    return res.render('paySuccess');
+}
 
-                    },
-                    currency: 'usd',
-                    unit_amount: 40050 // 400.50
-                },
-                quantity: 3
-            }
-        ]
-*/
+export const payCancelController = (req, res) => {
+    return res.render('payCancel');
+}

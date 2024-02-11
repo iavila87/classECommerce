@@ -15,12 +15,12 @@ import ProductManager from '../dao/ProductManager.js'
 import productsModel from "../dao/models/products.model.js"
 import cartsModel from "../dao/models/carts.model.js";
 import passport from "passport";
-import { handlePolicies, passportCall } from "../utils.js";
+import { handlePolicies, passportCall, publicRoutes } from "../utils.js";
 
 /** Inicializacion de ProductManager */
 //const pm = new ProductManager('./data/products.json');
 const router = Router();
-router.get('/', loginViewController);
+router.get('/', handlePolicies(['PUBLIC']),loginViewController);
 router.get('/register', registerViewController);
 router.get('/realtimeproducts', handlePolicies(['USER', 'ADMIN']), realTimeProductsViewController);
 // mock
@@ -28,9 +28,9 @@ router.get('/mockingproducts', mockingProductsViewController);
 // chat
 router.get('/chat', handlePolicies(['USER']), chatViewController);
 // products
-router.get('/products', passportCall('jwt'), handlePolicies(['USER', 'ADMIN']), productsViewController);
+router.get('/products', passportCall('jwt'), handlePolicies(['USER', 'PREMIUM', 'ADMIN']), productsViewController);
 // carts
-router.get('/carts/:cid', handlePolicies(['USER', 'ADMIN']), cartViewController);
+router.get('/carts/:cid', handlePolicies(['USER', 'PREMIUM', 'ADMIN']), cartViewController);
 
 router.get('/checkout', passportCall('jwt'), paySessionController);
 
