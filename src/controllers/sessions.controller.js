@@ -19,10 +19,12 @@ export const failRegisterSessionController = (req, res) => {
 }
 
 export const loginSessionController = async (req, res) => {
-    
+    console.log('login req.user '+JSON.stringify(req.user))
     if(!req.user){
         return res.status(400).send({status: 'error', error:'invalid credentials'});
     }
+
+    const lastUser = await UsersService.updateLastConn(req.user.email)
     // antes de redireccionar guardo el token en la cookie
     return res.cookie(JWT_COOKIE_NAME, req.user.token).redirect('/products');
 }

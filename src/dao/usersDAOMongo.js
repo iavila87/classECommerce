@@ -38,6 +38,16 @@ export default class UsersDAOMongo {
         return result;
     }
 
+    updateRole = async (user, role) => {
+        const result = await this.model.findOneAndUpdate({ email:user }, { role: role });
+        return result;
+    }
+
+    updateLastConn = async (email) => {
+        const result = await this.model.findOneAndUpdate({ email:email }, { last_connection: Date.now() });
+        return result;
+    }
+
     delete = async (id) => {
         const result = await this.model.deleteOne({_id:id});
         return result;

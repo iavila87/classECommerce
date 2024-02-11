@@ -24,6 +24,14 @@ export default class UsersRepository{
         return await this.dao.update(user, password);
     }
 
+    updateRole = async (user, role) => {
+        return await this.dao.updateRole(user, role);
+    }
+
+    updateLastConn = async (email) => {
+        return await this.dao.updateLastConn(email);
+    }
+
     delete = async (id) => {
         return await this.dao.delete(id);
     }

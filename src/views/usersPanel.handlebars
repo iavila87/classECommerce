@@ -22,7 +22,7 @@
                     </tr>
                     {{#each allUsersDTO}}
                     <tr>
-                        <td><button class="btn btn-success" onclick="addProductToCart( '{{this._id}}','{{../user.cart}}')">Agregar</button></td>
+                        <td><button class="btn btn-success" onclick="modRoleUser( '{{this.email}}','{{this.role}}')">Modificar Rol</button></td>
                         <td>{{this.first_name}}</td>
                         <td>{{this.email}}</td>
                         <td>{{this.role}}</td>

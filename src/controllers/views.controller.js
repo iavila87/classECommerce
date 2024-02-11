@@ -102,9 +102,10 @@ export const productsViewController = async (req, res) => {
             totalPages.push( { page: i, link } );
         }
         const user = req.user.user;
-        
+        const isAdmin = req.user.user.role == 'admin'? 'admin':null
         res.render('home', { // como segundo argumento le paso argumentos como objetos
             user,
+            isAdmin,
             emptyProducts: false,
             products: products.docs,
             paginateInfo: {

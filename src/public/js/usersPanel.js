@@ -1,5 +1,4 @@
 
-
 deleteInactiveUsers = () => {
     fetch(`/api/users`, {
         method: 'delete',
@@ -53,3 +52,34 @@ deleteInactiveUsers = () => {
     });*/
 
 }
+
+
+modRoleUser = ( email, role) => {
+
+    Swal.fire({
+        title: 'Modificar',
+        input: 'text',
+        text: 'Ingrese nuevo rol (admin, user o premium)',
+        inputValidator: value => {
+            return !value.trim() && 'Ingrese un rol valido';
+        },
+        allowOutsideClick: false
+    
+    }).then(result => {
+        let newRole = result.value;
+        
+        fetch(`/api/users/${email}/${newRole}`, {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+    
+    })
+
+
+
+
+
+} 

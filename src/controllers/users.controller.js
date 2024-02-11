@@ -3,6 +3,16 @@ import { UsersService } from '../repositories/index.js'
 import nodemailer from 'nodemailer'
 import config from '../config/config.js';
 
+export const modRoleUserController = async (req, res) => {
+    const email = req.params.user;
+    const role = req.params.role;
+    const user = await UsersService.updateRole(email,role);
+    
+    return res.status(200).send( { 
+        status:'success',
+        payload: user
+    } );
+}
 
 export const getAllUsersController = async (req, res) => {
     console.log("entre al get users")

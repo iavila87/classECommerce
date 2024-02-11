@@ -20,6 +20,17 @@
                 
             </form>
 
+            {{#if isAdmin}}
+                <form action="/users-panel" 
+                    method="get"
+                    class="d-flex flex-column mb-3 p-2 border rounded" 
+                    id="formAdmin">
+                
+                    <button type="submit" id="btnAdmin" class="btn btn-primary">Ir al Panel de Admin</button> 
+                
+                </form>
+            {{/if}}
+
         </div>
     </div>
     <div class="row">

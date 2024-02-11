@@ -1,3 +1,4 @@
+
 addProductToCart = (pid, cid) => {
     fetch(`/api/carts/${cid}/product/${pid}`, {
         method: 'post',
